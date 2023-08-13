@@ -5,11 +5,9 @@ const mongoose = require("mongoose");
 //     console.log('into the module');
 // };
 
-const uri = `mongodb+srv://rootgrid:svnit.bhawani@cluster0.xvfvzfh.mongodb.net/?retryWrites=true&w=majority`
-
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(uri, {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
