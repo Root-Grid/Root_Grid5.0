@@ -30,7 +30,7 @@ const sellerSchema = mongoose.Schema(
 // Helper Function while Sign In 
 // For matching the Password
 // bcrypt used for decoding the encoded password
-userSchema.methods.matchPassword = async function (entredPassword) {
+sellerSchema.methods.matchPassword = async function (entredPassword) {
     return await bcrypt.compare(entredPassword,this.password);
 }
 
@@ -39,7 +39,7 @@ userSchema.methods.matchPassword = async function (entredPassword) {
 // ------------------------------------- //
 // for password encoding
 // password should be saved in encoded form
-userSchema.pre("save", async function (next) {
+sellerSchema.pre("save", async function (next) {
     if (!this.isModified) {
       next();
     }
