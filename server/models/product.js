@@ -20,8 +20,7 @@ const productSchema = mongoose.Schema(
         },
         productDiscription: { type: String, required: true, default: "New Product" },
         productPrice: { type: Number , require: true },
-        seller: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seller" }]
-      
+        seller: { type: mongoose.Schema.Types.ObjectId, ref: "Seller" }
     }
   );
 
