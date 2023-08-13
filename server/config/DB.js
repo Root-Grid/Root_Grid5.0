@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 //     console.log('into the module');
 // };
 
-const uri = `mongodb+srv://sarthpatel1411:RootFlipkart@cluster0.ezgvcxq.mongodb.net/?retryWrites=true&w=majority`
+const uri = `mongodb+srv://rootgrid:svnit.bhawani@cluster0.xvfvzfh.mongodb.net/?retryWrites=true&w=majority`
 
 const connectDB = async () => {
   try {
