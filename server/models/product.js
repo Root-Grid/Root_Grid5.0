@@ -1,5 +1,4 @@
 /*
-product_id
 product_name
 product_discription
 product_image
@@ -10,10 +9,8 @@ seller_id
 
 const mongoose = require('mongoose');
 
-
 const productSchema = mongoose.Schema(
     {
-        productId: { type:Number, require: true },
         productName: { type: String, required: true },
         productImage: {
             type: "String",
@@ -27,3 +24,8 @@ const productSchema = mongoose.Schema(
       
     }
   );
+
+
+const Product = mongoose.model("Product",productSchema);
+
+module.exports = Product;
