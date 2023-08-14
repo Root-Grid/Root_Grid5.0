@@ -44,7 +44,10 @@ const registerUser = asyncHandler( async (req,res) => {
     }
 });
 
-
+//-------- Login User ---------
+//@des      To Login 
+//@route    --
+//@access   Public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     
