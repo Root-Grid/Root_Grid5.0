@@ -217,58 +217,6 @@ app.get("/allProductsSeller/:seller_id", async (req, res) => {
 // ------------------ Buyer Functions -----------------
 
 // new order --> blockchain remains
-<<<<<<< HEAD
-app.get("/order/:productId/:buyerId", async (req, res) => {
-  const { productId, buyerId } = req.params;
-
-  try {
-    const product = await Product.findById(productId);
-    const buyer = await Buyer.findById(buyerId);
-    const seller = await Seller.findById(product.seller);
-    console.log(
-      `Initial money: Buyer: ${buyer.walletMoney}, Seller: ${seller.walletMoney}`
-    );
-
-    const orderValue = product.productPrice;
-
-    if (buyer.walletMoney >= orderValue) {
-      const newBuyerMoney = buyer.walletMoney - orderValue;
-      await Buyer.findByIdAndUpdate(buyerId, { walletMoney: newBuyerMoney });
-
-      const newSellerMoney = seller.walletMoney + orderValue;
-      await Seller.findByIdAndUpdate(product.seller, {
-        walletMoney: newSellerMoney,
-      });
-
-      const newOrder = {
-        buyer: buyer._id,
-        product: product._id,
-      };
-      const order = await Order.create(newOrder);
-
-      // ----------- supercoins --------------
-      // Calculate supercoins earned by Flipkart (coins_by_flipkart) and by the seller (product.coins)
-      const coins_by_flipkart = (2 * Number(product.productPrice)) / 100;
-
-      console.log(`${product.productName} ordered by ${buyer.name}`);
-      console.log(`Supercoins transferred by Flipkart: ${coins_by_flipkart}`);
-      console.log(`Supercoins transferred by ${seller.name}: ${product.coins}`);
-      console.log(
-        `Remaining money: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`
-      );
-
-      /* blockchain -> transfer -> orderId + coins ( by flipkart & by seller) */
-      res.send(
-        `Order placed: ${product.productName}, Supercoins transferred by Flipkart: ${coins_by_flipkart} & by ${seller.name}: ${product.coins}`
-      );
-    } else {
-      console.log("Insufficient Money");
-      res
-        .status(400)
-        .send(
-          `Insufficient Money: ${buyer.walletMoney}, Order value: ${orderValue}`
-        );
-=======
 app.get('/order/:productId/:buyerId', async (req, res) => {
     const { productId, buyerId } = req.params;
 
@@ -309,7 +257,6 @@ app.get('/order/:productId/:buyerId', async (req, res) => {
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
->>>>>>> 08e0393afd38d0e881243d94ea36d31544c778a8
     }
   } catch (error) {
     console.error("Error:", error);
@@ -317,8 +264,6 @@ app.get('/order/:productId/:buyerId', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
 async function startStatusUpdateTimer(orderId, productCoins, buyer, seller, product) {
     const delay = 50000;
     const orderValue = product.productPrice;
@@ -361,7 +306,6 @@ app.get('/return/:orderId', async (req, res) => {
 
 
 
->>>>>>> 08e0393afd38d0e881243d94ea36d31544c778a8
 // add money --> temprery done
 app.get("/buyerReqMoney/:buyerId/:reqMoney", async (req, res) => {
   let { buyerId, reqMoney } = req.params;
@@ -411,9 +355,6 @@ app.get("/buyerUseCoins/:buyerId/:couponId", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-const server = app.listen(5000, console.log(`Server is running on 5000`));
-=======
 
 app.get('/viewbuyer/:buyerId', async (req,res) => {
     const {buyerId} = req.params;
@@ -430,4 +371,3 @@ app.get('/viewbuyer/:buyerId', async (req,res) => {
 
 
 const server = app.listen(5000,console.log(`Server is running on 5000`));
->>>>>>> 08e0393afd38d0e881243d94ea36d31544c778a8
