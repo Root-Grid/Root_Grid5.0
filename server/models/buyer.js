@@ -25,6 +25,11 @@ const buyerSchema = mongoose.Schema(
             type: Boolean,
             required: true,
             default: false,
+        },
+        walletMoney : {
+            type: Number,
+            require: true,
+            default: 10000,
         }
     }
   );

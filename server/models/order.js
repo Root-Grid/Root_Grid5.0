@@ -16,23 +16,23 @@ const orderSchema = mongoose.Schema(
             type : mongoose.Schema.Types.ObjectId,
             ref : "Buyer",
         },
-        seller : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "Seller",
-        },
-        products : [{
+        // seller : {
+        //     type : mongoose.Schema.Types.ObjectId,
+        //     ref : "Seller",
+        // },
+        product : {
             type : mongoose.Schema.Types.ObjectId,
             ref : "Product",
-        }],
-        ordervalue : {
-            type : Number
         }
+        // ordervalue : {
+        //     type : Number
+        // }
     },
     {
         timestamps : true,
     },
 );
 
-const Order = mongoose.model("Order",messageSchema);
+const Order = mongoose.model("Order",orderSchema);
 
 module.exports = Order;

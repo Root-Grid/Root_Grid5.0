@@ -16,11 +16,16 @@ const sellerSchema = mongoose.Schema(
         name: { type: String, required: true },
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true },
-        products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+        // products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
         isBlacklisted: {
             type: Boolean,
             required: true,
             default: false,
+        },
+        walletMoney : {
+            type: Number,
+            require: true,
+            default: 10000,
         }
     }
   );
