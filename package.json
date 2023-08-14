@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.1",
+    "prettier-plugin-tailwindcss": "^0.5.2"
+  }
+}
