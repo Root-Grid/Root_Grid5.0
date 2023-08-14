@@ -2,7 +2,6 @@
 name
 email
 password
-products
 isBlacklisted
 */
 
