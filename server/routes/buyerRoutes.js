@@ -12,8 +12,8 @@ const express = require('express');
 
 const router = express.Router();
 
-router.route('/').post( registerUser );
-router.route('/login').post( authUser );
-// router.route()
+// router.route('/').post( registerUser );
+// router.route('/login').post( authUser );
+// router.route('/s')
 
 module.exports = router;
