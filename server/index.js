@@ -371,6 +371,4 @@ app.get('/viewbuyer/:buyerId', async (req,res) => {
     }
 })
 
-
-
 const server = app.listen(5000,console.log(`Server is running on 5000`));
