@@ -30,7 +30,14 @@ const buyerSchema = mongoose.Schema(
             type: Number,
             require: true,
             default: 10000,
-        }
+        },
+        orderArr: [
+            {
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: 'Order',
+            }
+        ],
+
     }
   );
 

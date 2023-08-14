@@ -23,7 +23,12 @@ const orderSchema = mongoose.Schema(
         product : {
             type : mongoose.Schema.Types.ObjectId,
             ref : "Product",
-        }
+        },
+        status: {
+            type: String,
+            enum: ["orderPlaced", "Returned"],
+            default: "orderPlaced", 
+        },
         // ordervalue : {
         //     type : Number
         // }
