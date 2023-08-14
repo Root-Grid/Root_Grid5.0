@@ -3,6 +3,7 @@ const Buyer = require('../models/buyer');
 const Product = require('../models/product');
 const Order = require('../models/order');
 const Seller = require('../models/seller');
+const Coupon = require('../models/coupon');
 
 //-------- Register User ---------
 //@des      To register a new user
@@ -58,9 +59,6 @@ const authUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin,
-            pic: user.pic,
-            token: generateToken(user._id),
         });
     } else {
         res.status(401);
@@ -74,10 +72,10 @@ const authUser = asyncHandler(async (req, res) => {
 //@route    --
 //@access   To buyer only
 const buyProduct = asyncHandler( async (req,res) => {
-    const { productId, buyerId } = req.body;
+    // const { productId, buyerId } = req.body;
 
-    // const { productId } = req.body;
-    // let buyerId = req.buyer._id;
+    const { productId } = req.body;
+    let buyerId = req.buyer._id;
 
     try {
         const product = await Product.findById(productId);
@@ -125,4 +123,118 @@ const buyProduct = asyncHandler( async (req,res) => {
     }
 });
 
-module.exports = { registerUser, authUser, buyProduct };
+
+
+// ------- Add Money ---------
+//@des      To Add Money
+//@route    --
+//@access   To buyer only
+const addMoney = asyncHandler( async (req, res) => {
+    // let { buyerId, reqMoney } = req.body;
+    const { reqMoney } = req.body;
+    const buyerId = req.buyer._id;
+
+    try {
+        let buyer = await Buyer.findById(buyerId);
+        let newMoney = Number(buyer.walletMoney) + Number(reqMoney);
+        await Buyer.findOneAndUpdate({ _id: buyerId }, { walletMoney: newMoney });
+
+        // Perform actions related to supercoin transfer to another system (e.g., Flipkart)
+        // Note: This part of the code is commented out and should be implemented as needed.
+
+        console.log(`New money: ${newMoney}`);
+        res.send(`New money: ${newMoney}, Money Added: ${reqMoney}`);
+        
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// ------- Use Coins ---------
+//@des      To Use Coins / Blockchain
+//@route    --
+//@access   To buyer only
+const buyCoupons = asyncHandler( async (req,res) => {
+    // let { buyerId, couponId} = req.body;
+    let { couponId } = req.body;
+    let buyerId = req.buyer._id;
+
+    try {
+        let buyer = await Buyer.findById(buyerId);
+        let coupon = await Coupon.findById(couponId);
+
+        let reqCoins = coupon.coins;
+
+        /* blockchain */
+        let userCoins = 50;
+
+        if(userCoins >= reqCoins) {
+            /* make a txn in blockchain => user sends reqCoins to flipkart */
+
+            userCoins = userCoins - reqCoins;
+            console.log(`coupon: ${coupon.name} awails`);
+            console.log(`remain coins: ${userCoins}`);
+            res.send(`coupon: ${coupon.name} awails`)
+        }
+        else {
+            console.log("Not Enough Coins");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+// ------- Set Status ---------
+//@des      To change the status of the order after the timeout
+//@route    --
+//@access   To buyer only
+async function startStatusUpdateTimer(orderId, productCoins, buyer, seller, product) {
+    const delay = 50000;
+    const orderValue = product.productPrice;
+    setTimeout(async () => {
+        const order = await Order.findById(orderId);
+
+        if (order && order.status === 'Returned') {
+            console.log(`Order with ID ${orderId} has already been returned.`);
+        } else {
+            await Order.findByIdAndUpdate(orderId, { status: 'orderPlaced' });
+            console.log(`Order status updated to 'orderPlaced' for order ID: ${orderId}`);
+        }
+    }, delay);
+}
+
+
+// ------- Return Function ---------
+//@des      To return the product
+//@route    --
+//@access   To buyer only
+const returnFunction = asyncHandler( async (req, res) => {
+    const { orderId } = req.body;
+    const order = await Order.findById(orderId);
+    const product = await Product.findById(order.product);
+
+    if (order && order.status === 'Indeterminent') {
+        await Order.findByIdAndUpdate(orderId, { status: 'Returned' });
+
+        const buyer = await Buyer.findById(order.buyer);
+        const seller = await Seller.findById(product.seller);
+
+        const orderValue = product.productPrice;
+        const newBuyerMoney = Number(buyer.walletMoney) + Number(orderValue);
+        const newSellerMoney = Number(seller.walletMoney) - Number(orderValue);
+
+        await Buyer.findByIdAndUpdate(buyer._id, { walletMoney: newBuyerMoney });
+        await Seller.findByIdAndUpdate(seller._id, { walletMoney: newSellerMoney });
+
+        console.log(`Money reversed: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
+
+        res.send(`Order with ID ${orderId} has been returned and money reversed.`);
+    } else {
+        res.status(400).send(`Invalid return request.`);
+    }
+});
+
+module.exports = { registerUser, authUser, buyProduct, addMoney, buyCoupons, returnFunction, startStatusUpdateTimer };
