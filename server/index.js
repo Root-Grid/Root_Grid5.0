@@ -324,6 +324,18 @@ app.get('/buyerUseCoins/:buyerId/:couponId', async (req,res) => {
 });
 
 
+app.get('/viewbuyer/:buyerId', async (req,res) => {
+    const {buyerId} = req.params;
+
+    try {
+        const buyer = await Buyer.findById(buyerId);
+        res.send(buyer);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
 
 
 const server = app.listen(5000,console.log(`Server is running on 5000`));
