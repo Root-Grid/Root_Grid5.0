@@ -258,10 +258,6 @@ app.get('/order/:productId/:buyerId', async (req, res) => {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Internal Server Error");
-  }
 });
 
 async function startStatusUpdateTimer(orderId, productCoins, buyer, seller, product) {
