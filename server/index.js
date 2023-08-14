@@ -248,12 +248,13 @@ app.get('/order/:productId/:buyerId', async (req, res) => {
                 product: product._id,
             };
             const order = await Order.create(newOrder);
-
+            buyer.orderArr.push(order._id);
+            await buyer.save();
             // ----------- supercoins --------------
             // Calculate supercoins earned by Flipkart (coins_by_flipkart) and by the seller (product.coins)
             const coins_by_flipkart = (2 * Number(product.productPrice)) / 100;
-
             
+            res.send(buyer.orderArr);
             console.log(`${product.productName} ordered by ${buyer.name}`);
             console.log(`Supercoins transferred by Flipkart: ${coins_by_flipkart}`);
             console.log(`Supercoins transferred by ${seller.name}: ${product.coins}`);
