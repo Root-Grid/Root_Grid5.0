@@ -217,6 +217,7 @@ app.get("/allProductsSeller/:seller_id", async (req, res) => {
 // ------------------ Buyer Functions -----------------
 
 // new order --> blockchain remains
+<<<<<<< HEAD
 app.get("/order/:productId/:buyerId", async (req, res) => {
   const { productId, buyerId } = req.params;
 
@@ -267,6 +268,48 @@ app.get("/order/:productId/:buyerId", async (req, res) => {
         .send(
           `Insufficient Money: ${buyer.walletMoney}, Order value: ${orderValue}`
         );
+=======
+app.get('/order/:productId/:buyerId', async (req, res) => {
+    const { productId, buyerId } = req.params;
+
+    try {
+        const product = await Product.findById(productId);
+        const buyer = await Buyer.findById(buyerId);
+        const seller = await Seller.findById(product.seller);
+        console.log(`Initial money: Buyer: ${buyer.walletMoney}, Seller: ${seller.walletMoney}`);
+
+        const orderValue = product.productPrice;
+
+        if (buyer.walletMoney >= orderValue) {
+            const newBuyerMoney = Number(buyer.walletMoney) - Number(orderValue);
+            await Buyer.findByIdAndUpdate(buyerId, { walletMoney: newBuyerMoney });
+
+            const newSellerMoney = Number(seller.walletMoney) + Number(orderValue);
+            await Seller.findByIdAndUpdate(product.seller, { walletMoney: newSellerMoney });
+
+            const newOrder = {
+                buyer: buyer._id,
+                product: product._id,
+                status: 'Indeterminent',
+            };
+            const order = await Order.create(newOrder);
+            console.log(order);
+            console.log("****************************************");
+            buyer.orderArr.push(order._id);
+            await buyer.save();
+            startStatusUpdateTimer(order._id, product.coins, buyer, seller, product);
+
+            const coins_by_flipkart = (2 * Number(product.productPrice)) / 100;
+
+            res.send(`Order placed: ${product.productName} with orderId: ${order._id}, Supercoins transferred by Flipkart: ${coins_by_flipkart} & by ${seller.name}: ${product.coins}`);
+        } else {
+            console.log('Insufficient Money');
+            res.status(400).send(`Insufficient Money: ${buyer.walletMoney}, Order value: ${orderValue}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+>>>>>>> 08e0393afd38d0e881243d94ea36d31544c778a8
     }
   } catch (error) {
     console.error("Error:", error);
@@ -274,6 +317,51 @@ app.get("/order/:productId/:buyerId", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+async function startStatusUpdateTimer(orderId, productCoins, buyer, seller, product) {
+    const delay = 50000;
+    const orderValue = product.productPrice;
+    setTimeout(async () => {
+        const order = await Order.findById(orderId);
+
+        if (order && order.status === 'Returned') {
+            console.log(`Order with ID ${orderId} has already been returned.`);
+        } else {
+            await Order.findByIdAndUpdate(orderId, { status: 'orderPlaced' });
+            console.log(`Order status updated to 'orderPlaced' for order ID: ${orderId}`);
+        }
+    }, delay);
+}
+
+app.get('/return/:orderId', async (req, res) => {
+    const { orderId } = req.params;
+    const order = await Order.findById(orderId);
+    const product = await Product.findById(order.product);
+    if (order && order.status === 'Indeterminent') {
+        await Order.findByIdAndUpdate(orderId, { status: 'Returned' });
+
+        const buyer = await Buyer.findById(order.buyer);
+        const seller = await Seller.findById(product.seller);
+
+        const orderValue = product.productPrice;
+        const newBuyerMoney = Number(buyer.walletMoney) + Number(orderValue);
+        const newSellerMoney = Number(seller.walletMoney) - Number(orderValue);
+
+        await Buyer.findByIdAndUpdate(buyer._id, { walletMoney: newBuyerMoney });
+        await Seller.findByIdAndUpdate(seller._id, { walletMoney: newSellerMoney });
+
+        console.log(`Money reversed: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
+
+        res.send(`Order with ID ${orderId} has been returned and money reversed.`);
+    } else {
+        res.status(400).send(`Invalid return request.`);
+    }
+});
+
+
+
+>>>>>>> 08e0393afd38d0e881243d94ea36d31544c778a8
 // add money --> temprery done
 app.get("/buyerReqMoney/:buyerId/:reqMoney", async (req, res) => {
   let { buyerId, reqMoney } = req.params;
@@ -323,4 +411,23 @@ app.get("/buyerUseCoins/:buyerId/:couponId", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 const server = app.listen(5000, console.log(`Server is running on 5000`));
+=======
+
+app.get('/viewbuyer/:buyerId', async (req,res) => {
+    const {buyerId} = req.params;
+
+    try {
+        const buyer = await Buyer.findById(buyerId);
+        res.send(buyer);
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+
+
+const server = app.listen(5000,console.log(`Server is running on 5000`));
+>>>>>>> 08e0393afd38d0e881243d94ea36d31544c778a8
