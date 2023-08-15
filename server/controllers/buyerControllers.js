@@ -7,7 +7,7 @@ const Coupon = require('../models/coupon');
 
 //-------- Register User ---------
 //@des      To register a new user
-//@route    --
+//@route    POST /api/user/
 //@access   Public
 const registerUser = asyncHandler( async (req,res) => {
     const { name , email, password } = req.body;
@@ -47,7 +47,7 @@ const registerUser = asyncHandler( async (req,res) => {
 
 //-------- Login User ---------
 //@des      To Login 
-//@route    --
+//@route    POST /api/user/login
 //@access   Public
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
@@ -69,7 +69,7 @@ const authUser = asyncHandler(async (req, res) => {
 
 // ------- Buy Product ---------
 //@des      To buy a new Product
-//@route    --
+//@route    POST /api/user/buyproduct
 //@access   To buyer only
 const buyProduct = asyncHandler( async (req,res) => {
     // const { productId, buyerId } = req.body;
@@ -112,7 +112,15 @@ const buyProduct = asyncHandler( async (req,res) => {
             console.log(`Remaining money: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
 
             /* blockchain -> transfer -> orderId + coins ( by flipkart & by seller) */
-            res.send(`Order placed: ${product.productName}, Supercoins transferred by Flipkart: ${coins_by_flipkart} & by ${seller.name}: ${product.coins}`);
+            // res.send(`Order placed: ${product.productName}, Supercoins transferred by Flipkart: ${coins_by_flipkart} & by ${seller.name}: ${product.coins}`);
+            if(order) {
+                res.send(201).json({
+                    _id: order._id,
+                    buyer: order.buyer,
+                    product: order.product,
+                });
+            }
+
         } else {
             console.log('Insufficient Money');
             res.status(400).send(`Insufficient Money: ${buyer.walletMoney}, Order value: ${orderValue}`);
@@ -127,7 +135,7 @@ const buyProduct = asyncHandler( async (req,res) => {
 
 // ------- Add Money ---------
 //@des      To Add Money
-//@route    --
+//@route    POST /api/user/addmoney
 //@access   To buyer only
 const addMoney = asyncHandler( async (req, res) => {
     // let { buyerId, reqMoney } = req.body;
@@ -144,7 +152,7 @@ const addMoney = asyncHandler( async (req, res) => {
 
         console.log(`New money: ${newMoney}`);
         res.send(`New money: ${newMoney}, Money Added: ${reqMoney}`);
-        
+
     } catch (error) {
         console.error("Error:", error);
         res.status(500).send("Internal Server Error");
@@ -153,7 +161,7 @@ const addMoney = asyncHandler( async (req, res) => {
 
 // ------- Use Coins ---------
 //@des      To Use Coins / Blockchain
-//@route    --
+//@route    POST /api/user/buycoupons
 //@access   To buyer only
 const buyCoupons = asyncHandler( async (req,res) => {
     // let { buyerId, couponId} = req.body;
@@ -175,7 +183,13 @@ const buyCoupons = asyncHandler( async (req,res) => {
             userCoins = userCoins - reqCoins;
             console.log(`coupon: ${coupon.name} awails`);
             console.log(`remain coins: ${userCoins}`);
-            res.send(`coupon: ${coupon.name} awails`)
+            // res.send(`coupon: ${coupon.name} awails`)
+            if(coupon) {
+                res.send(201).json({
+                    _id: coupon._id,
+                    buyer: buyer
+                });
+            }
         }
         else {
             console.log("Not Enough Coins");
@@ -209,9 +223,9 @@ async function startStatusUpdateTimer(orderId, productCoins, buyer, seller, prod
 
 // ------- Return Function ---------
 //@des      To return the product
-//@route    --
+//@route    POST /api/user/returnproduct
 //@access   To buyer only
-const returnFunction = asyncHandler( async (req, res) => {
+const returnProduct = asyncHandler( async (req, res) => {
     const { orderId } = req.body;
     const order = await Order.findById(orderId);
     const product = await Product.findById(order.product);
@@ -237,4 +251,4 @@ const returnFunction = asyncHandler( async (req, res) => {
     }
 });
 
-module.exports = { registerUser, authUser, buyProduct, addMoney, buyCoupons, returnFunction, startStatusUpdateTimer };
+module.exports = { registerUser, authUser, buyProduct, addMoney, buyCoupons, returnProduct, startStatusUpdateTimer };
