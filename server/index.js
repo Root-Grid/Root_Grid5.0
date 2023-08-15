@@ -241,8 +241,6 @@ app.get('/order/:productId/:buyerId', async (req, res) => {
                 status: 'Indeterminent',
             };
             const order = await Order.create(newOrder);
-            console.log(order);
-            console.log("****************************************");
             buyer.orderArr.push(order._id);
             await buyer.save();
             startStatusUpdateTimer(order._id, product.coins, buyer, seller, product);
@@ -258,6 +256,7 @@ app.get('/order/:productId/:buyerId', async (req, res) => {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
+  
 });
 
 async function startStatusUpdateTimer(orderId, productCoins, buyer, seller, product) {
@@ -363,7 +362,5 @@ app.get('/viewbuyer/:buyerId', async (req,res) => {
         res.status(500).send("Internal Server Error");
     }
 })
-
-
 
 const server = app.listen(5000,console.log(`Server is running on 5000`));
