@@ -4,7 +4,7 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 const Seller = require('../models/seller');
 const Coupon = require('../models/coupon');
-const { setStatusUpdateTimer } = require('../config/setOrderStatus');
+const { setOrderStatus } = require('../config/setOrderStatus');
 
 //-------- Register User ---------
 //@des      To register a new user
@@ -15,7 +15,7 @@ const registerUser = asyncHandler( async (req,res) => {
 
     if(!name || !email || !password) {
         res.status(400);
-        throw new console.error('Please Enter all the Fields');
+        throw new Error('Please Enter all the Fields');
     }
 
     const userExists = await Buyer.findOne({ email });
@@ -73,10 +73,11 @@ const authUser = asyncHandler(async (req, res) => {
 //@access   To buyer only
 const singleProduct = asyncHandler( async (req,res) => {
     const productId = req.query.productId;
-    const product = Product.findById(productId);
+    const product = await Product.findById(productId);
 
     if(product) {
-        res.status(201).send(product);
+        res.json(product);
+        // console.log(product);
     }
     else {
         res.status(400);
@@ -89,10 +90,10 @@ const singleProduct = asyncHandler( async (req,res) => {
 //@route    POST /api/user/buyproduct
 //@access   To buyer only
 const buyProduct = asyncHandler( async (req,res) => {
-    // const { productId, buyerId } = req.body;
+    const { productId, buyerId } = req.body;
 
-    const { productId } = req.body;
-    let buyerId = req.buyer._id;
+    // const { productId } = req.body;
+    // let buyerId = req.buyer._id;
 
     try {
         const product = await Product.findById(productId);
@@ -130,7 +131,8 @@ const buyProduct = asyncHandler( async (req,res) => {
             /* blockchain -> transfer -> orderId + coins ( by flipkart & by seller) */
             // res.send(`Order placed: ${product.productName}, Supercoins transferred by Flipkart: ${coins_by_flipkart} & by ${seller.name}: ${product.coins}`);
             if(order) {
-                setStatusUpdateTimer(order._id);
+                console.log(order._id);
+                setOrderStatus(order._id);
                 res.send(201).json({
                     _id: order._id,
                     buyer: order.buyer,
@@ -153,9 +155,9 @@ const buyProduct = asyncHandler( async (req,res) => {
 //@route    POST /api/user/addmoney
 //@access   To buyer only
 const addMoney = asyncHandler( async (req, res) => {
-    // let { buyerId, reqMoney } = req.body;
-    const { reqMoney } = req.body;
-    const buyerId = req.buyer._id;
+    let { buyerId, reqMoney } = req.body;
+    // const { reqMoney } = req.body;
+    // const buyerId = req.buyer._id;
 
     try {
         let buyer = await Buyer.findById(buyerId);
@@ -179,9 +181,9 @@ const addMoney = asyncHandler( async (req, res) => {
 //@route    POST /api/user/buycoupons
 //@access   To buyer only
 const buyCoupons = asyncHandler( async (req,res) => {
-    // let { buyerId, couponId} = req.body;
-    let { couponId } = req.body;
-    let buyerId = req.buyer._id;
+    let { buyerId, couponId} = req.body;
+    // let { couponId } = req.body;
+    // let buyerId = req.buyer._id;
 
     try {
         let buyer = await Buyer.findById(buyerId);
@@ -200,8 +202,8 @@ const buyCoupons = asyncHandler( async (req,res) => {
             console.log(`remain coins: ${userCoins}`);
             // res.send(`coupon: ${coupon.name} awails`)
             if(coupon) {
-                res.send(201).json({
-                    _id: coupon._id,
+                res.json({
+                    coupon: coupon,
                     buyer: buyer
                 });
             }

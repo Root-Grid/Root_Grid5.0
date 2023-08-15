@@ -1,9 +1,10 @@
+const asyncHandler = require("express-async-handler");
 const Buyer = require("../models/buyer");
 const Order = require("../models/order");
 const Product = require("../models/product");
 const Seller = require("../models/seller");
 
-async function startStatusUpdateTimer( orderId ) {
+const setOrderStatus = asyncHandler( async ( orderId ) => {
     const delay = 50000;
 
     setTimeout(async () => {
@@ -23,9 +24,9 @@ async function startStatusUpdateTimer( orderId ) {
             const coins_by_flipkart = (2 * Number(product.productPrice)) / 100;
             console.log(`Supercoins transferred by Flipkart: ${coins_by_flipkart} -->`);
             console.log(`Supercoins transferred by ${seller.name}: ${product.coins} -->`);
-            console.log(`--> ${buyer.name}`);
+            console.log(`--> ${buyer}`);
         }
     }, delay);
-};
+});
 
-module.exports = { startStatusUpdateTimer };
+module.exports = { setOrderStatus };

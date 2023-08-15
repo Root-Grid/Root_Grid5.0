@@ -181,12 +181,12 @@ const addMoney = asyncHandler( async ( req, res ) => {
 
 // ------- Loyel customers ---------
 //@des      All loyal Customers
-//@route    /api/seller/loyalcustomers
+//@route    GET /api/seller/loyalcustomers
 //@access   To seller only
 const loyalCustomers = asyncHandler( async (req, res) => {
-    // const { sellerId } = req.body;
+    const { sellerId } = req.body;
 
-    const sellerId = req.seller._id;
+    // const sellerId = req.seller._id;
 
     const customer = {};
 
@@ -213,7 +213,7 @@ const loyalCustomers = asyncHandler( async (req, res) => {
         // Sort the customer array by loyalty points in descending order
         customerArray.sort((a, b) => b.loyalty - a.loyalty);
 
-        console.log(customerArray);
+        // console.log(customerArray);
         res.send(customerArray);
     } catch (error) {
         console.error('Error:', error);
@@ -226,13 +226,13 @@ const loyalCustomers = asyncHandler( async (req, res) => {
 //@route    /api/seller/allproducts
 //@access   To seller only
 const allProducts = asyncHandler( async (req, res) => {
-    // const { sellerId } = req.body;
+    const { sellerId } = req.body;
 
-    const sellerId = req.seller._id;
+    // const sellerId = req.seller._id;
     
     try {
         const products = await Product.find({ 'seller': sellerId });
-
+        res.send(products);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
