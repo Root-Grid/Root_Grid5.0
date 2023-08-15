@@ -1,15 +1,13 @@
-/* 
-Register
-Login
-BuyProduct
-
-*/
-
-
 const express = require('express');
-const { buyProduct, registerUser, authUser, addMoney, buyCoupons, returnProduct } = require('../controllers/buyerControllers');
-// const { registerUser, authUser, allUsers } = require('../controllers/userControllers');
-// const { protect } = require('../middleware/authMiddleware');
+const {
+    buyProduct,
+    registerUser,
+    authUser,
+    addMoney,
+    buyCoupons,
+    returnProduct,
+    singleProduct
+} = require('../controllers/buyerControllers');
 
 const router = express.Router();
 

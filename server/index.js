@@ -1,13 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/DB");
-const { buyProduct } = require("./controllers/buyerControllers");
 const path = require("path");
-const Product = require("./models/product");
-const Order = require("./models/order");
-const Buyer = require("./models/buyer");
-const Seller = require("./models/seller");
-const Coupon = require("./models/coupon");
+const  buyerRoutes = require('./routes/buyerRoutes');
+const  sellerRoutes = require('./routes/sellerRoutes');
 
 dotenv.config();
 connectDB();
@@ -19,6 +15,10 @@ app.get("/", (req, res) => {
   res.send("Shree Ganesh");
 });
 
+app.use('/api/user', buyerRoutes);
+app.use('/api/seller', sellerRoutes);
+
+/*
 // ------------------ Auth --------------------
 
 // new buyer
@@ -331,11 +331,11 @@ app.get("/buyerUseCoins/:buyerId/:couponId", async (req, res) => {
 
     let reqCoins = coupon.coins;
 
-    /* blockchain */
+    // ***********blockchain*******
     let userCoins = 50;
 
     if (userCoins >= reqCoins) {
-      /* make a txn in blockchain => user sends reqCoins to flipkart */
+      // ********* make a txn in blockchain => user sends reqCoins to flipkart *********
 
       userCoins = userCoins - reqCoins;
       console.log(`coupon: ${coupon.name} awails`);
@@ -363,4 +363,5 @@ app.get('/viewbuyer/:buyerId', async (req,res) => {
     }
 })
 
+*/
 const server = app.listen(5000,console.log(`Server is running on 5000`));

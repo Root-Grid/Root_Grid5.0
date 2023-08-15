@@ -4,6 +4,7 @@ const Product = require('../models/product');
 const Order = require('../models/order');
 const Seller = require('../models/seller');
 const Coupon = require('../models/coupon');
+const { setStatusUpdateTimer } = require('../config/setOrderStatus');
 
 //-------- Register User ---------
 //@des      To register a new user
@@ -66,6 +67,22 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
+// ------- Single Product ---------
+//@des      To view single product
+//@route    GET /api/user?productId=
+//@access   To buyer only
+const singleProduct = asyncHandler( async (req,res) => {
+    const productId = req.query.productId;
+    const product = Product.findById(productId);
+
+    if(product) {
+        res.status(201).send(product);
+    }
+    else {
+        res.status(400);
+        throw new Error("Product not found");
+    }
+});
 
 // ------- Buy Product ---------
 //@des      To buy a new Product
@@ -100,20 +117,20 @@ const buyProduct = asyncHandler( async (req,res) => {
                 product: product._id,
             };
             const order = await Order.create(newOrder);
-
-            // ----------- supercoins --------------
-            // Calculate supercoins earned by Flipkart (coins_by_flipkart) and by the seller (product.coins)
-            const coins_by_flipkart = (2 * Number(product.productPrice)) / 100;
-
-            
             console.log(`${product.productName} ordered by ${buyer.name}`);
-            console.log(`Supercoins transferred by Flipkart: ${coins_by_flipkart}`);
-            console.log(`Supercoins transferred by ${seller.name}: ${product.coins}`);
             console.log(`Remaining money: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
+
+            // ----------- supercoins -> in ../config/setOrderStatus --------------
+            // Calculate supercoins earned by Flipkart (coins_by_flipkart) and by the seller (product.coins)
+            // const coins_by_flipkart = (2 * Number(product.productPrice)) / 100;
+
+            // console.log(`Supercoins transferred by Flipkart: ${coins_by_flipkart}`);
+            // console.log(`Supercoins transferred by ${seller.name}: ${product.coins}`);
 
             /* blockchain -> transfer -> orderId + coins ( by flipkart & by seller) */
             // res.send(`Order placed: ${product.productName}, Supercoins transferred by Flipkart: ${coins_by_flipkart} & by ${seller.name}: ${product.coins}`);
             if(order) {
+                setStatusUpdateTimer(order._id);
                 res.send(201).json({
                     _id: order._id,
                     buyer: order.buyer,
@@ -130,8 +147,6 @@ const buyProduct = asyncHandler( async (req,res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
 
 // ------- Add Money ---------
 //@des      To Add Money
@@ -200,27 +215,6 @@ const buyCoupons = asyncHandler( async (req,res) => {
     }
 });
 
-
-// ------- Set Status ---------
-//@des      To change the status of the order after the timeout
-//@route    --
-//@access   To buyer only
-async function startStatusUpdateTimer(orderId, productCoins, buyer, seller, product) {
-    const delay = 50000;
-    const orderValue = product.productPrice;
-    setTimeout(async () => {
-        const order = await Order.findById(orderId);
-
-        if (order && order.status === 'Returned') {
-            console.log(`Order with ID ${orderId} has already been returned.`);
-        } else {
-            await Order.findByIdAndUpdate(orderId, { status: 'orderPlaced' });
-            console.log(`Order status updated to 'orderPlaced' for order ID: ${orderId}`);
-        }
-    }, delay);
-}
-
-
 // ------- Return Function ---------
 //@des      To return the product
 //@route    POST /api/user/returnproduct
@@ -251,4 +245,4 @@ const returnProduct = asyncHandler( async (req, res) => {
     }
 });
 
-module.exports = { registerUser, authUser, buyProduct, addMoney, buyCoupons, returnProduct, startStatusUpdateTimer };
+module.exports = { registerUser, authUser, buyProduct, addMoney, buyCoupons, returnProduct, singleProduct };

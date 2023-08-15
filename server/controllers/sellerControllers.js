@@ -7,7 +7,7 @@ const Seller = require('../models/seller');
 
 //-------- Register Seller ---------
 //@des      To register a new Seller
-//@route    --
+//@route    /api/seller/
 //@access   Public
 const registerSeller = asyncHandler( async (req,res) => {
     const { name , email, password } = req.body;
@@ -47,7 +47,7 @@ const registerSeller = asyncHandler( async (req,res) => {
 
 //-------- Login Seller ---------
 //@des      To Login 
-//@route    --
+//@route    /api/seller/login
 //@access   Public
 const authSeller = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
@@ -68,7 +68,7 @@ const authSeller = asyncHandler(async (req, res) => {
 
 //-------- Add Product ---------
 //@des      To Add Product 
-//@route    --
+//@route    /api/seller/addproduct
 //@access   Public
 const addProduct = asyncHandler( async (req, res) => {
 
@@ -109,7 +109,7 @@ const addProduct = asyncHandler( async (req, res) => {
 
 // ------- Add Coins ---------
 //@des      To add supercoins in sellers account
-//@route    --
+//@route    /api/seller/addcoin
 //@access   To seller only
 const addCoins = asyncHandler( async ( req, res ) => {
 
@@ -150,7 +150,7 @@ const addCoins = asyncHandler( async ( req, res ) => {
 
 // ------- Add Money ---------
 //@des      To add money in sellers account
-//@route    --
+//@route    /api/seller/addmoney
 //@access   To seller only
 const addMoney = asyncHandler( async ( req, res ) => {
 
@@ -181,7 +181,7 @@ const addMoney = asyncHandler( async ( req, res ) => {
 
 // ------- Loyel customers ---------
 //@des      All loyal Customers
-//@route    --
+//@route    /api/seller/loyalcustomers
 //@access   To seller only
 const loyalCustomers = asyncHandler( async (req, res) => {
     // const { sellerId } = req.body;
@@ -223,7 +223,7 @@ const loyalCustomers = asyncHandler( async (req, res) => {
 
 // ------- All Products ---------
 //@des      All Products
-//@route    --
+//@route    /api/seller/allproducts
 //@access   To seller only
 const allProducts = asyncHandler( async (req, res) => {
     // const { sellerId } = req.body;
