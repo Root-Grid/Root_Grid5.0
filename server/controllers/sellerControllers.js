@@ -74,8 +74,8 @@ const addProduct = asyncHandler( async (req, res) => {
 
     // const { name, sellerId } = req.body;
 
-    const { name, image, discription, price, coins} = req.body;
-    const sellerId = req.seller._id;
+    const { name, image, discription, price,sellerId, coins} = req.body;
+    // const sellerId = req.seller._id;
 
     try {
         const seller = await Seller.findById(sellerId);
