@@ -22,6 +22,7 @@ app.use(express.json());
 //     allowedHeaders: ["Content-Type", "Authorization"],
 //   })
 // );
+
 app.get("/", (req, res) => {
   res.send("Shree Ganesh");
 });
@@ -375,4 +376,6 @@ app.get('/viewbuyer/:buyerId', async (req,res) => {
 })
 
 */
-const server = app.listen(4000, console.log(`Server is running on 5000`));
+
+const port = 5000;
+const server = app.listen(port, console.log(`Server is running on ${port}`));

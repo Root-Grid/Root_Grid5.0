@@ -6,7 +6,8 @@ const {
     addCoins,
     addMoney,
     loyalCustomers,
-    allProducts
+    allProducts,
+    getSeller
 } = require('../controllers/sellerControllers');
 
 const router = express.Router();
@@ -16,7 +17,8 @@ router.route('/login').post( authSeller );
 router.route('/addproduct').post( addProduct );
 router.route('/addcoins').post( addCoins );
 router.route('/addmoney').post( addMoney );
-router.route('/loyalcustomers').get( loyalCustomers );
-router.route('/allproducts').get( allProducts );
+router.route('/loyalcustomers').post( loyalCustomers );
+router.route('/allproducts').post( allProducts );
+router.route('/getseller').post( getSeller );
 
 module.exports = router;

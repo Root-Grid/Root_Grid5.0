@@ -181,45 +181,51 @@ const addMoney = asyncHandler( async ( req, res ) => {
 
 // ------- Loyel customers ---------
 //@des      All loyal Customers
-//@route    GET /api/seller/loyalcustomers
+//@route    post /api/seller/loyalcustomers
 //@access   To seller only
-const loyalCustomers = asyncHandler( async (req, res) => {
+const loyalCustomers = asyncHandler(async (req, res) => {
     const { sellerId } = req.body;
-
-    // const sellerId = req.seller._id;
 
     const customer = {};
 
     try {
         const orders = await Order.find({});
-        
+
         await Promise.all(orders.map(async (element) => {
             const product = await Product.findById(element.product);
 
             if (product.seller == sellerId) {
-                const user = element.buyer;
+                const buyerId = element.buyer;
 
-                if (customer.hasOwnProperty(user)) {
-                    customer[user] += product.productPrice;
+                const buyer = await Buyer.findById(buyerId);
+
+                if (customer.hasOwnProperty(buyerId)) {
+                    customer[buyerId].loyalty += product.productPrice;
                 } else {
-                    customer[user] = product.productPrice;
+                    customer[buyerId] = {
+                        loyalty: product.productPrice,
+                        buyer: buyer, // Include the buyer object
+                    };
                 }
             }
         }));
 
         // Convert the customer object to an array of objects
-        const customerArray = Object.entries(customer).map(([user, loyalty]) => ({ user, loyalty }));
+        const customerArray = Object.entries(customer).map(([buyerId, loyaltyObj]) => ({
+            buyerId,
+            loyalty: loyaltyObj.loyalty,
+            buyer: loyaltyObj.buyer, // Include the buyer object
+        }));
 
         // Sort the customer array by loyalty points in descending order
         customerArray.sort((a, b) => b.loyalty - a.loyalty);
-
-        // console.log(customerArray);
-        res.send(customerArray);
+        res.json(customerArray);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 // ------- All Products ---------
 //@des      All Products
@@ -229,14 +235,39 @@ const allProducts = asyncHandler( async (req, res) => {
     const { sellerId } = req.body;
 
     // const sellerId = req.seller._id;
+
+    // const sellerId = "64d9bba591337a8af2a5ad25"; // ganesh
     
     try {
         const products = await Product.find({ 'seller': sellerId });
-        res.send(products);
+        // console.log(products);
+        res.json(products);
+        // res.send(JSON.stringify(products));
+        // res.json("hello")
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
 });
 
-module.exports = { registerSeller, authSeller, addProduct, addCoins, addMoney, loyalCustomers, allProducts };
+
+// Temp Function
+// @route   GET /api/seller/getseller
+const getSeller = asyncHandler( async(req,res) => {
+    const { sellerId } = req.body;
+
+    // console.log(sellerId);
+    try{
+        const seller = await Seller.findById(sellerId);
+        // console.log(seller);
+        res.json({
+            "id":seller._id,
+            "name":seller.name
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
+module.exports = { registerSeller, authSeller, addProduct, addCoins, addMoney, loyalCustomers, allProducts, getSeller };
