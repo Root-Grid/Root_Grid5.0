@@ -5,6 +5,8 @@ const Order = require('../models/order');
 const Seller = require('../models/seller');
 const Coupon = require('../models/coupon');
 const { setOrderStatus } = require('../config/setOrderStatus');
+const generateToken = require('../config/generateToken');
+const { response } = require('express');
 
 //-------- Register User ---------
 //@des      To register a new user
@@ -34,7 +36,7 @@ const registerUser = asyncHandler( async (req,res) => {
     try {
         var buyer = await Buyer.create(newUser);
         if(buyer) {
-            res.send(201).json({
+            res.json({
                 _id: buyer._id,
                 name: buyer.name,
                 email: buyer.email,
@@ -52,6 +54,7 @@ const registerUser = asyncHandler( async (req,res) => {
 //@route    POST /api/user/login
 //@access   Public
 const authUser = asyncHandler(async (req, res) => {
+    // console.log("into the func");
     const { email, password } = req.body;
     
     const user = await Buyer.findOne({ email });
@@ -61,6 +64,7 @@ const authUser = asyncHandler(async (req, res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            token: generateToken(user._id)
         });
     } else {
         res.status(401);
@@ -100,7 +104,7 @@ const buyProduct = asyncHandler( async (req,res) => {
         const product = await Product.findById(productId);
         const buyer = await Buyer.findById(buyerId);
         const seller = await Seller.findById(product.seller);
-        console.log(`Initial money: Buyer: ${buyer.walletMoney}, Seller: ${seller.walletMoney}`);
+        // console.log(`Initial money: Buyer: ${buyer.walletMoney}, Seller: ${seller.walletMoney}`);
        
         const orderValue = product.productPrice;
 
@@ -119,8 +123,10 @@ const buyProduct = asyncHandler( async (req,res) => {
                 product: product._id,
             };
             const order = await Order.create(newOrder);
-            console.log(`${product.productName} ordered by ${buyer.name}`);
-            console.log(`Remaining money: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
+            buyer.orderArr.push(order);
+            await buyer.save();
+            // console.log(`${product.productName} ordered by ${buyer.name}`);
+            // console.log(`Remaining money: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
 
             // ----------- supercoins -> in ../config/setOrderStatus --------------
             // Calculate supercoins earned by Flipkart (coins_by_flipkart) and by the seller (product.coins)
@@ -131,13 +137,14 @@ const buyProduct = asyncHandler( async (req,res) => {
 
             /* blockchain -> transfer -> orderId + coins ( by flipkart & by seller) */
             // res.send(`Order placed: ${product.productName}, Supercoins transferred by Flipkart: ${coins_by_flipkart} & by ${seller.name}: ${product.coins}`);
+            
             if(order) {
-                console.log(order._id);
-                setOrderStatus(order._id);
-                res.send(201).json({
+                setOrderStatus(order._id); // return function
+                res.json({
                     _id: order._id,
                     buyer: order.buyer,
                     product: order.product,
+                    status: order.status
                 });
             }
 
@@ -145,6 +152,26 @@ const buyProduct = asyncHandler( async (req,res) => {
             console.log('Insufficient Money');
             res.status(400).send(`Insufficient Money: ${buyer.walletMoney}, Order value: ${orderValue}`);
         }
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+// ------- Check Order ---------
+//@des      To buy a new Product
+//@route    POST /api/user/checkorder
+//@access   To buyer only
+const checkOrder = asyncHandler(async(req,res) => {
+    const {orderId} = req.body;
+    
+    try{
+        const order = Order.findById(orderId);
+        res.json({
+            status:order.status
+        })
+
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
@@ -223,6 +250,7 @@ const buyCoupons = asyncHandler( async (req,res) => {
 //@route    POST /api/user/returnproduct
 //@access   To buyer only
 const returnProduct = asyncHandler( async (req, res) => {
+    // console.log("insode the func");
     const { orderId } = req.body;
     const order = await Order.findById(orderId);
     const product = await Product.findById(order.product);
@@ -240,12 +268,13 @@ const returnProduct = asyncHandler( async (req, res) => {
         await Buyer.findByIdAndUpdate(buyer._id, { walletMoney: newBuyerMoney });
         await Seller.findByIdAndUpdate(seller._id, { walletMoney: newSellerMoney });
 
-        console.log(`Money reversed: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
-
-        res.send(`Order with ID ${orderId} has been returned and money reversed.`);
+        console.log(`product returned--> Money reversed: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
+       
+      
+        res.send(201);
     } else {
         res.status(400).send(`Invalid return request.`);
     }
 });
 
-module.exports = { registerUser, authUser, buyProduct, addMoney, buyCoupons, returnProduct, singleProduct };
+module.exports = { registerUser, authUser, buyProduct, checkOrder, addMoney, buyCoupons, returnProduct, singleProduct };

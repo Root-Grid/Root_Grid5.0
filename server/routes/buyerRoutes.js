@@ -6,7 +6,8 @@ const {
     addMoney,
     buyCoupons,
     returnProduct,
-    singleProduct
+    singleProduct,
+    checkOrder
 } = require('../controllers/buyerControllers');
 const { protectBuyer } = require('../middleware/authMiddleware');
 
@@ -18,5 +19,6 @@ router.route('/buyproduct').post( protectBuyer, buyProduct );
 router.route('/addmoney').post( protectBuyer, addMoney );
 router.route('/buycoupons').post( protectBuyer, buyCoupons );
 router.route('/returnproduct').post( protectBuyer, returnProduct );
+router.route('/checkorder').post( protectBuyer, checkOrder);
 
 module.exports = router;

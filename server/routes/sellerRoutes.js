@@ -7,7 +7,8 @@ const {
     addMoney,
     loyalCustomers,
     allProducts,
-    getSeller
+    getSeller,
+    allProductsSeller
 } = require('../controllers/sellerControllers');
 const { protectSeller } = require('../middleware/authMiddleware');
 
@@ -19,7 +20,8 @@ router.route('/addproduct').post( protectSeller, addProduct );
 router.route('/addcoins').post( protectSeller, addCoins );
 router.route('/addmoney').post( protectSeller, addMoney );
 router.route('/loyalcustomers').post( protectSeller, loyalCustomers );
-router.route('/allproducts').post( protectSeller, allProducts );
+router.route('/allproducts').post( allProductsSeller );
+router.route('/allproducts').get( allProducts );
 router.route('/getseller').post( getSeller );
 
 module.exports = router;

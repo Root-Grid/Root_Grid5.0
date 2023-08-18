@@ -12,7 +12,7 @@ function signuppage()
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
   const [cnfpassword,setCnfPassword] = useState();
-  const [error,setError] = useState();
+  const [error,setError] = useState('no error');
 
   const router = useRouter()
   const submitHandler = async (e) => {
@@ -26,27 +26,29 @@ function signuppage()
       };
       if(isSeller){
         const data   = await axios.post(
-          "/api/seller/login",
-          { email, password },
+          "http://localhost:5000/api/seller/",
+          { name, email, password },
           config
         );
           
         // setUser(data.data);
 
         console.log(data.data.name);
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        router.push('/seller');
         
       }
       else{
         const data  = await axios.post(
-          "http://localhost:5000/api/user/login",
-          { email, password },
+          "http://localhost:5000/api/user/",
+          { name, email, password },
           config
         );
 
         // setUser(data.data);
         console.log(data.data.name);
         localStorage.setItem("userInfo", JSON.stringify(data));
-        router.push('/');
+        router.push('/user');
   
       }
       
@@ -97,6 +99,7 @@ function signuppage()
         <button type='submit' className='btn-primary btn' placeholder='submit' onClick={submitHandler}>Submit</button>
       </form>
       <div>Already Signed Up? <Link href='/login' className='text-amber-300'>Login Here</Link></div>
+      <div>{error}</div>
     </div>
   )
 }

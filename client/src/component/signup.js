@@ -1,23 +1,25 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 
-// import {useHistory} from 'react-route-dom'
+import {useHistory} from 'react-route-dom'
 
-const Login = () => {
+const Registration = () => {
     const [isSeller,setIsSeller] = useState(false);
+    const [name,setName] = useState();
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
+    const [cnfpassword,setCnfPassword] = useState();
     const [error,setError] = useState();
 
-    // const history = useHistory();
+    const history = useHistory();
 
     
     const submitHandler = async () => {
         
-        setError(`email:${email}, password: ${password}, isSeller?: ${isSeller}`);
+        setError(`name:${name}, email:${email}, password: ${password}, confirm_password?: ${cnfpassword}, isSeller?: ${isSeller}`);
 
         // setLoading(true);
-        if (!email || !password) {
+        if (!name || !email || !password || !cnfpassword) {
             // toast({
             //   title: "Please Fill all the Feilds",
             //   status: "warning",
@@ -40,7 +42,7 @@ const Login = () => {
             
             if(isSeller) {
                 const { data } = await axios.post(
-                    "/api/seller/login",
+                    "/api/seller/",
                     { email, password },
                     config
                 );
@@ -49,12 +51,12 @@ const Login = () => {
                 localStorage.setItem("userInfo", JSON.stringify(data));
 
 
-                // history.push('/seller');
+                history.push('/seller');
                 
             }
             else {
                 const { data } = await axios.post(
-                    "/api/user/login",
+                    "/api/user/",
                     { email, password },
                     config
                 );
@@ -62,7 +64,7 @@ const Login = () => {
 
                 localStorage.setItem("userInfo", JSON.stringify(data));
 
-                // history.push('/user');
+                history.push('/user');
             }
     
             // toast({
@@ -99,8 +101,10 @@ const Login = () => {
             <option value="true" >seller</option>
             <option value="false">buyer</option>
         </select>
+        <input id='name' onChange={((e) => {setName(e.target.value)})} placeholder='name'/>
         <input type='email' id='email' onChange={((e) => {setEmail(e.target.value)})} placeholder='email'/>
         <input type='password' id='password' onChange={((e) => {setPassword(e.target.value)})} placeholder='password'/>
+        <input type='password' id='cnfpassword' onChange={((e) => {setCnfPassword(e.target.value)})} placeholder='confirm password'/>
         <div>{error}</div>
         <button onClick={submitHandler}>Submit</button>
         

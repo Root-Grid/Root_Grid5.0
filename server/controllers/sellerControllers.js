@@ -34,7 +34,7 @@ const registerSeller = asyncHandler( async (req,res) => {
     try {
         var seller = await Seller.create( newSeller );
         if( seller ) {
-            res.send(201).json({
+            res.json({
                 _id: seller._id,
                 name: seller.name,
                 email: seller.email,
@@ -61,6 +61,7 @@ const authSeller = asyncHandler(async (req, res) => {
             _id: seller._id,
             name: seller.name,
             email: seller.email,
+            token: generateToken(seller._id)
         });
     } else {
         res.status(401);
@@ -229,11 +230,11 @@ const loyalCustomers = asyncHandler(async (req, res) => {
 });
 
 
-// ------- All Products ---------
+// ------- All Products of a seller---------
 //@des      All Products
-//@route    /api/seller/allproducts
+//@route    /api/seller/allproductsseller
 //@access   To seller only
-const allProducts = asyncHandler( async (req, res) => {
+const allProductsSeller = asyncHandler( async (req, res) => {
     const { sellerId } = req.body;
 
     // const sellerId = req.seller._id;
@@ -242,6 +243,29 @@ const allProducts = asyncHandler( async (req, res) => {
     
     try {
         const products = await Product.find({ 'seller': sellerId });
+        // console.log(products);
+        res.json(products);
+        // res.send(JSON.stringify(products));
+        // res.json("hello")
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// ------- All Products ---------
+//@des      All Products
+//@route    /api/seller/allproducts
+//@access   To seller only
+const allProducts = asyncHandler( async (req, res) => {
+    // const { sellerId } = req.body;
+
+    // const sellerId = req.seller._id;
+
+    // const sellerId = "64d9bba591337a8af2a5ad25"; // ganesh
+    
+    try {
+        const products = await Product.find({});
         // console.log(products);
         res.json(products);
         // res.send(JSON.stringify(products));
@@ -272,4 +296,4 @@ const getSeller = asyncHandler( async(req,res) => {
     }
 })
 
-module.exports = { registerSeller, authSeller, addProduct, addCoins, addMoney, loyalCustomers, allProducts, getSeller };
+module.exports = { registerSeller, authSeller, addProduct, addCoins, addMoney, loyalCustomers, allProductsSeller, allProducts, getSeller };

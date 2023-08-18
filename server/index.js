@@ -4,9 +4,9 @@ const connectDB = require("./config/DB");
 const path = require("path");
 const buyerRoutes = require("./routes/buyerRoutes");
 const sellerRoutes = require("./routes/sellerRoutes");
-// const cors = require("cors");
+const cors = require("cors");
 
-// const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["http://localhost:3000"];
 
 dotenv.config();
 connectDB();
@@ -15,13 +15,13 @@ app.use(express.json());
 
 // app.use('/api/user/',)
 
-// app.use(
-//   cors({
-//     origin: allowedOrigins,
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   })
-// );
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Shree Ganesh");

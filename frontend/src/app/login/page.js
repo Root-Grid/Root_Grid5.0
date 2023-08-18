@@ -23,7 +23,7 @@ function loginPage() {
       };
       if(isSeller){
         const data   = await axios.post(
-          "/api/seller/login",
+          "http://localhost:5000/api/seller/login",
           { email, password },
           config
         );
