@@ -1,0 +1,397 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_id",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "desc",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "addBalance",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"name": "all_participants",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "wallet",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "id",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "balance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum Supercoin.roles",
+				"name": "role",
+				"type": "uint8"
+			},
+			{
+				"internalType": "enum Supercoin.status",
+				"name": "current_status",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "buyer_ids",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_buyerId",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_orderId",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "coinsFlipkart",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "coinsSeller",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_sellerId",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "claimCoins",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_id",
+				"type": "string"
+			}
+		],
+		"name": "getParticipantDetails",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "wallet",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "id",
+						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "desc",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "balance_before",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "balance_after",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum Supercoin.transaction_type",
+								"name": "credit_or_debit",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "transaction_id",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Supercoin.history_entry[]",
+						"name": "history",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum Supercoin.roles",
+						"name": "role",
+						"type": "uint8"
+					},
+					{
+						"internalType": "enum Supercoin.status",
+						"name": "current_status",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct Supercoin.participant",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_id",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_role",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "registerParticipant",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "wallet",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "id",
+						"type": "string"
+					},
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "desc",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "balance_before",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "balance_after",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum Supercoin.transaction_type",
+								"name": "credit_or_debit",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "transaction_id",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct Supercoin.history_entry[]",
+						"name": "history",
+						"type": "tuple[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum Supercoin.roles",
+						"name": "role",
+						"type": "uint8"
+					},
+					{
+						"internalType": "enum Supercoin.status",
+						"name": "current_status",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct Supercoin.participant",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "seller_ids",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_id",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "desc",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "subtractBalance",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[]",
+				"name": "_customer_ids",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string",
+				"name": "_seller_id",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_number_of_coins",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_timestamp",
+				"type": "uint256"
+			}
+		],
+		"name": "toLoyalCustomers",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
