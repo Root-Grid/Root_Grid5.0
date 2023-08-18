@@ -13,7 +13,7 @@ function page() {
         setUserInfo(JSON.parse(userInfoFromStorage));
       }
     }, []);
-
+    const number = 1;
     return (
       <div className="bg-white min-h-screen">
         <nav className="bg-blue-500 text-white py-4">
@@ -59,8 +59,15 @@ function page() {
         </nav>
         <div className="bg-gray-100 py-12">
           <div className="container mx-auto grid grid-cols-2 gap-8">
-            {[1, 2, 3, 4].map((number) => (
-              <Link key={number} href={`/page-${number}`}>
+              <Link href='/seller/addproduct'>
+                <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
+                  <div className="bg-white p-6 rounded-lg shadow-lg">
+                    <div className="text-2xl font-semibold mb-4">Add Product</div>
+                    <div className="text-gray-500">Click Here to Add product to your store</div>
+                  </div>
+                </div>
+              </Link>
+              <Link href={`/page-${2}`}>
                 <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
                   <div className="bg-white p-6 rounded-lg shadow-lg">
                     <div className="text-2xl font-semibold mb-4">Button {number}</div>
@@ -68,7 +75,22 @@ function page() {
                   </div>
                 </div>
               </Link>
-            ))}
+              <Link href={`/page-${3}`}>
+                <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
+                  <div className="bg-white p-6 rounded-lg shadow-lg">
+                    <div className="text-2xl font-semibold mb-4">Button {number}</div>
+                    <div className="text-gray-500">Card {number} description</div>
+                  </div>
+                </div>
+              </Link>
+              <Link href={`/page-${4}`}>
+                <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
+                  <div className="bg-white p-6 rounded-lg shadow-lg">
+                    <div className="text-2xl font-semibold mb-4">Button {number}</div>
+                    <div className="text-gray-500">Card {number} description</div>
+                  </div>
+                </div>
+              </Link>
           </div>
         </div>
       </div>
