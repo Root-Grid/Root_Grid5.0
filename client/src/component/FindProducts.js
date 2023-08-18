@@ -49,7 +49,7 @@ function FindProducts() {
             <input onChange={(e) => {setSellerId(e.target.value)}}/>
             <div onClick={submitHandler}>submit {sellerId}</div>
             <div>name: {sellerName}</div>
-            {/* <div>
+            <div>
             product-----------
               {product ? (
                 <div>
@@ -60,7 +60,7 @@ function FindProducts() {
               ) : (
                 <div>No products found</div>
               )}
-            </div> */}
+            </div>
             <div>
             customers----
               {loyalCustomers? (

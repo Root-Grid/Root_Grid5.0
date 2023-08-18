@@ -37,7 +37,7 @@ const buyerSchema = mongoose.Schema(
                 ref: 'Order',
             }
         ],
-
+        
     }
   );
 

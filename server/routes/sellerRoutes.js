@@ -9,16 +9,17 @@ const {
     allProducts,
     getSeller
 } = require('../controllers/sellerControllers');
+const { protectSeller } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 router.route('/').post( registerSeller );
 router.route('/login').post( authSeller );
-router.route('/addproduct').post( addProduct );
-router.route('/addcoins').post( addCoins );
-router.route('/addmoney').post( addMoney );
-router.route('/loyalcustomers').post( loyalCustomers );
-router.route('/allproducts').post( allProducts );
+router.route('/addproduct').post( protectSeller, addProduct );
+router.route('/addcoins').post( protectSeller, addCoins );
+router.route('/addmoney').post( protectSeller, addMoney );
+router.route('/loyalcustomers').post( protectSeller, loyalCustomers );
+router.route('/allproducts').post( protectSeller, allProducts );
 router.route('/getseller').post( getSeller );
 
 module.exports = router;

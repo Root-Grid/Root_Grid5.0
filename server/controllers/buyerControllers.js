@@ -33,11 +33,12 @@ const registerUser = asyncHandler( async (req,res) => {
 
     try {
         var buyer = await Buyer.create(newUser);
-        if(user) {
+        if(buyer) {
             res.send(201).json({
                 _id: buyer._id,
                 name: buyer.name,
-                email: buyer.email
+                email: buyer.email,
+                token: generateToken(buyer._id)
             });
         }
     } catch (error) {

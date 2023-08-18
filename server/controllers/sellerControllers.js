@@ -3,6 +3,7 @@ const Buyer = require('../models/buyer');
 const Product = require('../models/product');
 const Order = require('../models/order');
 const Seller = require('../models/seller');
+const generateToken = require('../config/generateToken');
 
 
 //-------- Register Seller ---------
@@ -36,7 +37,8 @@ const registerSeller = asyncHandler( async (req,res) => {
             res.send(201).json({
                 _id: seller._id,
                 name: seller.name,
-                email: seller.email
+                email: seller.email,
+                token: generateToken(seller._id)
             });
         }
     } catch (error) {
