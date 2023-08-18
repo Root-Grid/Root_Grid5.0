@@ -230,10 +230,10 @@ const buyCoupons = asyncHandler( async (req,res) => {
             console.log(`remain coins: ${userCoins}`);
             // res.send(`coupon: ${coupon.name} awails`)
             if(coupon) {
-                res.json({
-                    coupon: coupon,
-                    buyer: buyer
-                });
+                // res.json({
+                //     time:t
+                // });
+                res.send(201);
             }
         }
         else {
