@@ -79,7 +79,7 @@ function loginPage() {
         
         <button type='submit' className='btn-primary btn' placeholder='submit' onClick={submitHandler}>Submit</button>
       </form>
-      <div>New User? <Link href='/signin' className='text-amber-300'>Click Here</Link></div>
+      <div>New User? <Link href='/signup' className='text-amber-300'>Click Here</Link></div>
     </div>
   )
 }
