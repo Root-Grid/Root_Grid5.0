@@ -9,27 +9,27 @@ module.exports = {
     {
       mytheme: {
       
-"primary": "#1eafed",
-      
-"secondary": "#a6ed95",
-      
-"accent": "#e8d55a",
-      
-"neutral": "#272a3a",
-      
-"base-100": "#e7e7e9",
-      
-"info": "#9bcbf3", 
-      
-"success": "#1ba77f",
-      
-"warning": "#ad690b",
-      
-"error": "#f16e6a",
+        "primary": "#1eafed",
+              
+        "secondary": "#a6ed95",
+              
+        "accent": "#e8d55a",
+              
+        "neutral": "#272a3a",
+              
+        "base-100": "#e7e7e9",
+              
+        "info": "#9bcbf3", 
+              
+        "success": "#1ba77f",
+              
+        "warning": "#ad690b",
+              
+        "error": "#f16e6a",
       },
     },
   ],
-},
+
   plugins: [require("daisyui")],
 
-}
+};
