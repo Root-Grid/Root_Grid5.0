@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import Link from 'next/link';
+import ProductCard from '../user/ProductCard';
 import React, { useEffect, useState } from 'react'
 
 
@@ -20,9 +21,11 @@ function page() {
     },[])
 
     useEffect(() => {
-      fetchData();
-    }, [seller]);
-    
+      if (seller && sellerId) {
+        fetchData();
+      }
+    }, [seller, sellerId]);
+
     const fetchData = async () => {
       if(seller){
         try {
@@ -33,11 +36,11 @@ function page() {
             },
           };
           const data = await axios.post(
-            "http://localhost:5000/api/seller/allproductsseller",
+            "http://localhost:5000/api/seller/allproducts",
             { sellerId },
             config
             )
-
+            console.log(seller);
             setProducts(data.data);
             setLoading(false);
             // console.log(data.data);
@@ -59,7 +62,7 @@ function page() {
             />
             <div className="text-2xl font-bold">RootKart</div>
           </div>
-          <div className="text-2xl font-bold">{loading?(<>Loading...</>):(<>{userInfo.data.name}'s Deshboard</>)}</div>
+          <div className="text-2xl font-bold">{loading?(<>Loading...</>):(<>{seller.name}'s Deshboard</>)}</div>
           <div className="flex items-center space-x-2">
             <span className="text-sm">Supercoins: 123</span>
             <span className="text-sm">Rewards: 456</span>
@@ -114,6 +117,14 @@ function page() {
               </div>
           </Link>
         </div>
+        <div>
+  <h2 className="text-3xl font-semibold mb-4">YOUR PRODUCTS</h2>
+  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+    {products?.map((product) => (
+      <ProductCard product={product} key={product._id} />
+    ))}
+  </div>
+</div>
 
       </div>
       <style jsx>{`

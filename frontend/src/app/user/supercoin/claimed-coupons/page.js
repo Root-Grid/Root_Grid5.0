@@ -5,7 +5,7 @@ const transactions = [
   { status: 'debited', date: '2023-08-14', amount: 200 },
 ];
 
-const supercoinDashboard = () => {
+const TransactionHistory = () => {
   const balance = transactions.reduce((total, transaction) => total + transaction.amount, 0);
 
   return (
@@ -47,4 +47,4 @@ const supercoinDashboard = () => {
   );
 };
 
-export default supercoinDashboard;
+export default TransactionHistory;
