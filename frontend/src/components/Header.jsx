@@ -10,7 +10,7 @@ import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
-import Connectbutton from "./ConnectButton";
+import Connectbutton from "./Connectbutton";
 
 const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
