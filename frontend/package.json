@@ -21,10 +21,12 @@
     "eslint-config-prettier": "^9.0.0",
     "ethers": "^6.7.1",
     "http-proxy-middleware": "^2.0.6",
+    "lokijs": "^1.5.12",
     "net": "^1.0.2",
     "next": "13.4.17",
     "next-auth": "^4.23.1",
     "next-redux-wrapper": "^8.1.0",
+    "pino-pretty": "^10.2.0",
     "postcss": "8.4.28",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.5.3",
@@ -42,9 +44,9 @@
   },
   "browser": {
     "fs": false,
-    "path": false, 
-    "os": false, 
-    "net": false, 
+    "path": false,
+    "os": false,
+    "net": false,
     "tls": false
   }
 }

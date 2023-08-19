@@ -93,7 +93,7 @@ const addProduct = asyncHandler( async (req, res) => {
         }
         var product = await Product.create(newProduct);
         if( product ) {
-            res.send(201).json({
+            res.json({
                 _id: product._id,
                 name: product.name,
                 picture: product.productImage,

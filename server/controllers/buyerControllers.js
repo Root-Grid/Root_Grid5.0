@@ -283,15 +283,37 @@ const returnProduct = asyncHandler( async (req, res) => {
 //@des      To return all the order history
 //@route    POST /api/user/allorders
 //@access   To buyer only
-const allOrders = asyncHandler( async (req, res) => {
-    const { buyerId } = req.body;
-    
-    try {
-        const orders = await Order.find({ 'buyer': buyerId });
-        res.json(orders);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
+// const allOrders = asyncHandler(async (req, res) => {
+//     const { buyerId } = req.body;
+  
+//     try {
+//       const orders = await Order.find({ buyer: buyerId });
+//       let products = [];
+  
+//       // Fetch products for each order and push them into the products array
+//       for (const order of orders) {
+//         const product = await Product.findById(order.product);
+//         products.push(product);
+//       }
+  
+//       // Send both orders and products as an object
+//       res.json({ orders, products });
+//     } catch (error) {
+//       console.error('Error:', error);
+//       res.status(500).send('Internal Server Error');
+//     }
+//   });
+const allOrders = asyncHandler(async (req, res) => {
+  const { buyerId } = req.body;
+
+  try {
+    const orders = await Order.find({ buyer: buyerId }).populate('product'); // Populate the 'product' field to get product details.
+    res.json(orders);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
+  
 module.exports = { registerUser, authUser, buyProduct, checkOrder, addMoney, buyCoupons, returnProduct, singleProduct, allOrders};

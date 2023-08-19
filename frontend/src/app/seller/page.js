@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import Link from 'next/link';
+import ProductCard from '../user/ProductCard';
 import React, { useEffect, useState } from 'react'
 
 
@@ -20,9 +21,11 @@ function page() {
     },[])
 
     useEffect(() => {
-      fetchData();
-    }, [seller]);
-    
+      if (seller && sellerId) {
+        fetchData();
+      }
+    }, [seller, sellerId]);
+
     const fetchData = async () => {
       if(seller){
         try {
@@ -37,7 +40,7 @@ function page() {
             { sellerId },
             config
             )
-
+            console.log(seller);
             setProducts(data.data);
             setLoading(false);
             // console.log(data.data);
@@ -114,6 +117,14 @@ function page() {
               </div>
           </Link>
         </div>
+        <div>
+  <h2 className="text-3xl font-semibold mb-4">YOUR PRODUCTS</h2>
+  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+    {products?.map((product) => (
+      <ProductCard product={product} key={product._id} />
+    ))}
+  </div>
+</div>
 
         <div className='my-10'>
         <div>
