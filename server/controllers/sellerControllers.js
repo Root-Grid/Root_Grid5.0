@@ -187,7 +187,7 @@ const addMoney = asyncHandler( async ( req, res ) => {
 //@route    post /api/seller/loyalcustomers
 //@access   To seller only
 const loyalCustomers = asyncHandler(async (req, res) => {
-    const { sellerId } = req.body;
+    const { sellerId, threshold } = req.body; // Add threshold to the request body
 
     const customer = {};
 
@@ -222,12 +222,17 @@ const loyalCustomers = asyncHandler(async (req, res) => {
 
         // Sort the customer array by loyalty points in descending order
         customerArray.sort((a, b) => b.loyalty - a.loyalty);
-        res.json(customerArray);
+
+        // Filter out customers whose loyalty points are below the threshold
+        const loyalCustomersAboveThreshold = customerArray.filter(customer => customer.loyalty > threshold);
+
+        res.json(loyalCustomersAboveThreshold);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 
 // ------- All Products of a seller---------

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard';
 import Image from 'next/image';
+import Header from '@/components/Header';
+import Footer from '@/components/Fotter';
 
 function userHome() {
     
@@ -50,6 +52,8 @@ function userHome() {
 
     return (
       <div>
+      <Header/>
+      <div>
         {isLoading?(
           <div>loading.....</div>
           )
@@ -94,6 +98,8 @@ function userHome() {
           </div>
         )
       }
+      </div>
+      <Footer/>
       </div>
   )
 }

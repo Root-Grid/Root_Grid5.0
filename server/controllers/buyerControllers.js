@@ -123,8 +123,9 @@ const buyProduct = asyncHandler( async (req,res) => {
                 product: product._id,
             };
             const order = await Order.create(newOrder);
-            buyer.orderArr.push(order);
-            await buyer.save();
+            // buyer.orderArr.push(order);
+            // await buyer.save();
+
             // console.log(`${product.productName} ordered by ${buyer.name}`);
             // console.log(`Remaining money: Buyer: ${newBuyerMoney}, Seller: ${newSellerMoney}`);
 
@@ -277,4 +278,20 @@ const returnProduct = asyncHandler( async (req, res) => {
     }
 });
 
-module.exports = { registerUser, authUser, buyProduct, checkOrder, addMoney, buyCoupons, returnProduct, singleProduct };
+
+// ------- All Orders ---------
+//@des      To return all the order history
+//@route    POST /api/user/allorders
+//@access   To buyer only
+const allOrders = asyncHandler( async (req, res) => {
+    const { buyerId } = req.body;
+    
+    try {
+        const orders = await Order.find({ 'buyer': buyerId });
+        res.json(orders);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+module.exports = { registerUser, authUser, buyProduct, checkOrder, addMoney, buyCoupons, returnProduct, singleProduct, allOrders};

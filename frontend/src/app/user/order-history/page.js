@@ -1,6 +1,7 @@
 "use client";
 
 import axios from 'axios';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react';
 
@@ -10,19 +11,46 @@ const transactions = [
   // ... other transactions
 ];
 
-const orderHistory = async () => {
+const orderHistory = () => {
     const [buyer,setBuyer] = useState();
     const [buyerId,setBuyerId] = useState();
     const [orders,setOrders] = useState();
     const [isLoading,setLoading] = useState(true);
 
-    // const fetchLoading = () => {
-    //     setTimeout(setLoading(false),500);
-    // }
     useEffect(() => {
         const data = JSON.parse(localStorage.userInfo).data;
-        // fetchLoading();
+        setBuyer(data);
+        setBuyerId(data._id);
     },[])
+
+    useEffect(() => {
+      fetchData();
+    }, [buyer])
+
+    const fetchData = async () => {
+      if(buyer){
+        try {
+          const config = {
+            headers: {
+              "Content-type": "application/json",
+              "Authorization": `Bearer ${buyer.token}`,
+            },
+          };
+          const data = await axios.post(
+            "http://localhost:5000/api/user/allorders",
+            { buyerId },
+            config
+            )
+
+            setOrders(data.data);
+            setLoading(false);
+            // console.log(data.data);
+          } catch(error) {
+          console.log(`error: ${error} `);
+        }
+      }
+    }
+
 
 
     
@@ -68,22 +96,21 @@ const orderHistory = async () => {
           {
             isLoading?(<div>Loading....</div>):
             (
-                <div className="space-y-4">
-                    {orders.map((order, index) => (
-                <div
-                    key={index}
-                    className={`flex justify-between items-center border-b pb-4`}
-                >
-                    <div className="flex flex-col">
-                    <div className="text-black">order {index + 1}</div>
-                    <div className="text-gray-500">{order}</div>
+              <div className="space-y-4">
+                  {orders.map((order) => (
+                    <Link href={`/user/products/${order.product}`} key={order._id}>
+                    <div className={`flex justify-between items-center border-b pb-4`}>
+                      <div className="flex flex-col">
+                        <div className="text-black">{order._id}</div>
+                        <div className="text-gray-500">Ordered on date: {new Date(order.createdAt).getDate()}-{new Date(order.createdAt).getMonth() + 1}-{new Date(order.createdAt).getFullYear()}</div>
+                      </div>
+                      <div className="bg-gray-500 px-2 py-1 rounded">
+                        {order.status}
+                      </div>
                     </div>
-                    <div className="bg-gray-500 px-2 py-1 rounded">
-                    
-                    </div>
+                    </Link>
+                  ))}
               </div>
-            ))}
-                </div>
             )
           }
           </div>

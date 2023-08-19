@@ -1,5 +1,5 @@
 import './globals.css'
-import { wrapper } from '../../redux/store'
+// import { wrapper } from '../../redux/store'
 // import { Inter } from 'next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -17,4 +17,5 @@ function RootLayout({ children }) {
   )
 }
 
-export default wrapper.withRedux(RootLayout);
+// export default wrapper.withRedux(RootLayout);
+export default RootLayout

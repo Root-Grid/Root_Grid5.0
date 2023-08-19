@@ -31,12 +31,12 @@ const buyerSchema = mongoose.Schema(
             require: true,
             default: 10000,
         },
-        orderArr: [
-            {
-                type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Order',
-            }
-        ],
+        // orderArr: [
+        //     {
+        //         type: mongoose.Schema.Types.ObjectId, 
+        //         ref: 'Order',
+        //     }
+        // ],
         
     }
   );
