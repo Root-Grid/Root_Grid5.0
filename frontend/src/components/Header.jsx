@@ -10,6 +10,8 @@ import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight, BiSolidCoinStack } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
+import Connectbutton from "./Connectbutton";
+
 const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [showCatMenu, setShowCatMenu] = useState(false);
@@ -95,6 +97,9 @@ const Header = () => {
                         )}
                     </div>
                     {/* Mobile icon end */}
+                    <div>
+                        <Connectbutton />
+                    </div>
                 </div>
             </Wrapper>
         </header>
