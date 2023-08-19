@@ -15,7 +15,7 @@ const registerSeller = asyncHandler( async (req,res) => {
 
     if(!name || !email || !password) {
         res.status(400);
-        throw new console.error('Please Enter all the Fields');
+        throw new Error('Please Enter all the Fields');
     }
 
     const sellerExists = await Seller.findOne({ email });

@@ -12,7 +12,7 @@ function signuppage()
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
   const [cnfpassword,setCnfPassword] = useState();
-  const [error,setError] = useState('no error');
+  const [error,setError] = useState('');
 
   const router = useRouter()
   const submitHandler = async (e) => {
@@ -59,47 +59,76 @@ function signuppage()
   };
 
   return (
-    <div className='container mx-auto px-4 	border-style: solid border-white'>
-      <h1 className="mb-3 text-lg font-bold">Sign Up</h1>
-      <form>
-        <div className="join join-vertical lg:join-horizontal">
-          <button className="btn join-item" onClick={()=>{setIsSeller(true)}}>Seller</button>
-          <button className="btn join-item" onClick={()=>{setIsSeller(false)}}>Buyer</button>
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+      <div className="bg-white w-96 p-8 rounded-lg shadow-md">
+        <h1 className="text-3xl font-semibold mb-6 text-center">Sign Up</h1>
+        <div className="mb-4">
+          <button
+            className={`w-1/2 py-2 px-4 rounded-tl-lg rounded-bl-lg ${
+              isSeller ? 'bg-gray-300' : 'bg-blue-500 text-white'
+            }`}
+            onClick={() => setIsSeller(false)}
+          >
+            Buyer
+          </button>
+          <button
+            className={`w-1/2 py-2 px-4 rounded-tr-lg rounded-br-lg ${
+              isSeller ? 'bg-blue-500 text-white' : 'bg-gray-300'
+            }`}
+            onClick={() => setIsSeller(true)}
+          >
+            Seller
+          </button>
         </div>
-        <input
-          required
-          name="name"
-          placeholder="Name"
-          className="input-bordered input mb-3 w-full"
-          onChange={e => {setName(e.target.value)}}
-        />
-        <input
-          required
-          name="email"
-          placeholder="Email"
-          className="input-bordered input mb-3 w-full"
-          onChange={e => {setEmail(e.target.value)}}
-        />
-        <input
-          required
-          type='password'
-          name="password"
-          placeholder="Password"
-          className="input-bordered input mb-3 w-full"
-          onChange={e => {setPassword(e.target.value)}}
-        />
-        <input
-          required
-          type='password'
-          name="cnfpassword"
-          placeholder="confirm password"
-          className="input-bordered input mb-3 w-full"
-          onChange={e => {setCnfPassword(e.target.value)}}
-        />
-        <button type='submit' className='btn-primary btn' placeholder='submit' onClick={submitHandler}>Submit</button>
-      </form>
-      <div>Already Signed Up? <Link href='/login' className='text-amber-300'>Login Here</Link></div>
-      <div>{error}</div>
+        <form>
+          <input
+            required
+            type="text"
+            name="name"
+            placeholder="Name"
+            className="w-full mb-2 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            required
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="w-full mb-2 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            required
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full mb-2 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            required
+            type="password"
+            name="cnfpassword"
+            placeholder="Confirm Password"
+            className="w-full mb-4 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
+            onChange={(e) => setCnfPassword(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+            onClick={submitHandler}
+          >
+            Submit
+          </button>
+        </form>
+        <div className="mt-4 text-center">
+          Already Signed Up?{' '}
+          <Link href="/login" className="text-blue-500">
+            Login Here
+          </Link>
+        </div>
+        {error && <div className="text-red-500 mt-4">{error}</div>}
+      </div>
     </div>
   )
 }

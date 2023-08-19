@@ -54,34 +54,61 @@ function loginPage() {
     
   }
   return (
-    <div className='container mx-auto px-4 	border-style: solid border-white'>
-      <h1 className="mb-3 text-lg font-bold">Log In</h1>
-      <form>
-        <div className="join join-vertical lg:join-horizontal">
-          <button className="btn join-item" onClick={()=>{setIsSeller(true)}}>Seller</button>
-          <button className="btn join-item" onClick={()=>{setIsSeller(false)}}>Buyer</button>
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+      <div className="bg-white w-96 p-8 rounded-lg shadow-md">
+        <h1 className="text-3xl font-semibold mb-6 text-center">Log In</h1>
+        <div className="mb-4">
+          <button
+            className={`w-1/2 py-2 px-4 rounded-tl-lg rounded-bl-lg ${
+              isSeller ? 'bg-gray-300' : 'bg-blue-500 text-white'
+            }`}
+            onClick={() => setIsSeller(false)}
+          >
+            Buyer
+          </button>
+          <button
+            className={`w-1/2 py-2 px-4 rounded-tr-lg rounded-br-lg ${
+              isSeller ? 'bg-blue-500 text-white' : 'bg-gray-300'
+            }`}
+            onClick={() => setIsSeller(true)}
+          >
+            Seller
+          </button>
         </div>
-        <input
-          required
-          name="email"
-          placeholder="Email"
-          className="input-bordered input mb-3 w-full"
-          onChange={e => {setEmail(e.target.value)}}
-        />
-        <input
-          required
-          type='password'
-          name="password"
-          placeholder="Password"
-          className="input-bordered input mb-3 w-full"
-          onChange={e => {setPassword(e.target.value)}}
-        />
-        
-        <button type='submit' className='btn-primary btn' placeholder='submit' onClick={submitHandler}>Submit</button>
-      </form>
-      <div>New User? <Link href='/signup' className='text-amber-300'>Click Here</Link></div>
+        <form>
+          <input
+            required
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="w-full mb-4 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            required
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full mb-4 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+            onClick={submitHandler}
+          >
+            Submit
+          </button>
+        </form>
+        <div className="mt-4 text-center">
+          New User?{' '}
+          <Link href="/signup" className="text-blue-500">
+            Click Here
+          </Link>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default loginPage

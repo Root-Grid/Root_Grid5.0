@@ -1,100 +1,144 @@
 "use client";
 
+import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
+
+
 function page() {
-    const [userInfo, setUserInfo] = useState(null);
+    const [seller,setSeller] = useState();
+    const [sellerId,setSellerId] = useState();
+    const [products,setProducts] = useState();
+    const [loading,setLoading] = useState(true);
 
     // Use useEffect to retrieve userInfo from localStorage
     useEffect(() => {
-      const userInfoFromStorage = localStorage.getItem("userInfo");
-      if (userInfoFromStorage) {
-        setUserInfo(JSON.parse(userInfoFromStorage));
+      const data = JSON.parse(localStorage.userInfo).data;
+      setSeller(data);
+      setSellerId(data._id);
+    },[])
+
+    useEffect(() => {
+      fetchData();
+    }, [seller]);
+    
+    const fetchData = async () => {
+      if(seller){
+        try {
+          const config = {
+            headers: {
+              "Content-type": "application/json",
+              "Authorization": `Bearer ${seller.token}`,
+            },
+          };
+          const data = await axios.post(
+            "http://localhost:5000/api/seller/allproductsseller",
+            { sellerId },
+            config
+            )
+
+            setProducts(data.data);
+            setLoading(false);
+            // console.log(data.data);
+          } catch(error) {
+          console.log(`error: ${error} `);
+        }
       }
-    }, []);
-    const number = 1;
+    }
+
     return (
-      <div className="bg-white min-h-screen">
-        <nav className="bg-blue-500 text-white py-4">
-          <div className="container mx-auto flex justify-between items-center">
-            <div className="text-xl font-bold">RootKart</div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 2c-3.526 0-6.62 1.791-8.426 4.522A9.962 9.962 0 002 12c0 5.523 4.477 10 10 10s10-4.477 10-10-4.477-10-10-10zm5.156 5.156a2 2 0 10-2.312 2.312A2 2 0 0018.156 7.156zM5.866 6.05a7.963 7.963 0 014.73-2.363M4 12a8 8 0 0110.315-7.59M18.865 17.95a7.963 7.963 0 01-4.73 2.363M20 12a8 8 0 01-10.316 7.59"
-                  />
-                </svg>
-                <span>123</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 0v10l2.5-1.5M12 14l-2.5 1.5M9.5 15.5l-2.5-1.5M14.5 15.5L12 14"
-                  />
-                </svg>
-                <span>456</span>
-              </div>
-            </div>
+      <div className="bg-white min-h-screen text-black">
+      <nav className="bg-blue-600 text-white py-2">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <img
+              src="/root.png"
+              alt="Your Logo"
+              className="h-10 w-15"
+            />
+            <div className="text-2xl font-bold">RootKart</div>
           </div>
-        </nav>
-        <div className="bg-gray-100 py-12">
-          <div className="container mx-auto grid grid-cols-2 gap-8">
-              <Link href='/seller/addproduct'>
-                <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
-                  <div className="bg-white p-6 rounded-lg shadow-lg">
-                    <div className="text-2xl font-semibold mb-4">Add Product</div>
-                    <div className="text-gray-500">Click Here to Add product to your store</div>
-                  </div>
-                </div>
-              </Link>
-              <Link href={`/page-${2}`}>
-                <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
-                  <div className="bg-white p-6 rounded-lg shadow-lg">
-                    <div className="text-2xl font-semibold mb-4">Button {number}</div>
-                    <div className="text-gray-500">Card {number} description</div>
-                  </div>
-                </div>
-              </Link>
-              <Link href={`/page-${3}`}>
-                <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
-                  <div className="bg-white p-6 rounded-lg shadow-lg">
-                    <div className="text-2xl font-semibold mb-4">Button {number}</div>
-                    <div className="text-gray-500">Card {number} description</div>
-                  </div>
-                </div>
-              </Link>
-              <Link href={`/page-${4}`}>
-                <div className="hover:bg-blue-300 hover:scale-105 transform transition-transform duration-300 border-zinc-100">
-                  <div className="bg-white p-6 rounded-lg shadow-lg">
-                    <div className="text-2xl font-semibold mb-4">Button {number}</div>
-                    <div className="text-gray-500">Card {number} description</div>
-                  </div>
-                </div>
-              </Link>
+          <div className="text-2xl font-bold">{loading?(<>Loading...</>):(<>{userInfo.data.name}'s Deshboard</>)}</div>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm">Supercoins: 123</span>
+            <span className="text-sm">Rewards: 456</span>
           </div>
         </div>
+      </nav>
+
+      <div className="container mx-auto py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <Link href="/seller/addproduct">
+              <div className="item">
+                <div className="item-inner">
+                  <div className="text-xl font-semibold mb-2">Add Product</div>
+                  <div className="text-gray-500">
+                    Click Here to Add product to your store
+                  </div>
+                </div>
+              </div>
+          </Link>
+          <Link href="/seller/loyalcustomers">
+              <div className="item">
+                <div className="item-inner">
+                  <div className="text-xl font-semibold mb-2">
+                    Loyal Customers
+                  </div>
+                  <div className="text-gray-500">
+                    Know your loyal customers and reward them!!
+                  </div>
+                </div>
+              </div>
+          </Link>
+          <Link href="/seller/transaction-history">
+              <div className="item">
+                <div className="item-inner">
+                  <div className="text-xl font-semibold mb-2">
+                    Transaction History
+                  </div>
+                  <div className="text-gray-500">
+                    View your transaction history of supercoins
+                  </div>
+                </div>
+              </div>
+          </Link>
+          <Link href="/page-4">
+              <div className="item">
+                <div className="item-inner">
+                  <div className="text-xl font-semibold mb-2">Add Coin</div>
+                  <div className="text-gray-500">
+                    Buy some supercoins to reward your customers!!
+                  </div>
+                </div>
+              </div>
+          </Link>
+        </div>
+
       </div>
-    );
+      <style jsx>{`
+        .item {
+          border: 1px solid #e2e2e2;
+          background-color: #fff;
+          padding: 16px;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s ease-in-out;
+        }
+
+        .item:hover {
+          transform: scale(1.05);
+          background-color: #93C5FD;
+        }
+
+        .item-inner {
+          display: flex;
+          flex-direction: column;
+        }
+      `}</style>
+    </div>
+  );
+    
 }
 
 export default page;
