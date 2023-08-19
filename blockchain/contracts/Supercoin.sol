@@ -51,7 +51,11 @@ contract Supercoin {
     string[] public buyer_ids;
     mapping(string => participant) public all_participants;
     uint256 value_of_one_coin = 10;
-    uint256 total_supply = 0;
+    uint256 total_supply;
+
+    constructor( uint256 _value ) {
+        total_supply = _value;
+    }
 
     function getParticipantDetails( string calldata _id ) external view returns (participant memory) {
         require(bytes(all_participants[_id].id).length>0, "Invalid Id");
