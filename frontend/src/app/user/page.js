@@ -7,6 +7,8 @@ import ProductCard from './ProductCard';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Fotter';
+import HeroBanner from '@/components/HeroBanner';
+import AProductCard from '@/components/AProductCard'
 
 function userHome() {
     
@@ -53,6 +55,7 @@ function userHome() {
     return (
       <div>
       <Header/>
+      <HeroBanner/>
       <div>
         {isLoading?(
           <div>loading.....</div>
@@ -87,8 +90,9 @@ function userHome() {
 
             <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {/* <div key={product._id}>{product.productName}</div> */}
+                {/* <ProductCard product={product} key={product._id} /> */}
               {products?.map((product) => (
-                <ProductCard product={product} key={product._id} />
+                <AProductCard product={product} key={product._id} />
               ))}
             </div>
 

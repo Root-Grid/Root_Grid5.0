@@ -10,16 +10,16 @@ const data = [
 ];
 
 const subMenuData = [
-    { id: 1, name: "Jordan", doc_count: 11 },
-    { id: 2, name: "Sneakers", doc_count: 8 },
-    { id: 3, name: "Running shoes", doc_count: 64 },
-    { id: 4, name: "Football shoes", doc_count: 107 },
+    { id: 1, name: "Glocery", doc_count: 11 },
+    { id: 2, name: "Mobiles", doc_count: 8 },
+    { id: 3, name: "Fashion", doc_count: 64 },
+    { id: 4, name: "Electronics", doc_count: 107 },
 ];
 
 // const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
 const Menu = ({ showCatMenu, setShowCatMenu  }) => {
     return (
-        <ul className="hidden md:flex items-center gap-8 font-medium text-black">
+        <ul className="hidden md:flex items-center gap-8 font-medium text-white">
             {data.map((item) => {
                 return (
                     <React.Fragment key={item.id}>
@@ -33,13 +33,13 @@ const Menu = ({ showCatMenu, setShowCatMenu  }) => {
                                 <BsChevronDown size={14} />
 
                                 {showCatMenu && (
-                                    <ul className="bg-white absolute top-6 left-0 min-w-[250px] px-1 py-1 text-black shadow-lg">
+                                    <ul className="bg-white/[0.5] absolute top-6 left-0 min-w-[250px] px-1 py-1 text-black shadow-lg rounded-md">
                                         {subMenuData?.map((submenu) => {
                                             return (
                                                 <Link key={submenu.id} href="/">
-                                                    <li className="h-12 flex justify-between items-center px-3 hover:bg-black/[0.03] rounded-md">
+                                                    <li className="h-12 flex justify-between items-center px-3 hover:bg-blue-500/[0.8] rounded-md">
                                                     {submenu.name}
-                                                    <span>78</span>
+                                                    <span>{submenu.doc_count}</span>
                                                     </li>
                                                 </Link>
                                             )

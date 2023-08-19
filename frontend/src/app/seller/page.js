@@ -33,7 +33,7 @@ function page() {
             },
           };
           const data = await axios.post(
-            "http://localhost:5000/api/seller/allproductsseller",
+            "http://localhost:5000/api/seller/allproducts",
             { sellerId },
             config
             )
@@ -59,7 +59,7 @@ function page() {
             />
             <div className="text-2xl font-bold">RootKart</div>
           </div>
-          <div className="text-2xl font-bold">{loading?(<>Loading...</>):(<>{userInfo.data.name}'s Deshboard</>)}</div>
+          <div className="text-2xl font-bold">{loading?(<>Loading...</>):(<>{seller.name}'s Deshboard</>)}</div>
           <div className="flex items-center space-x-2">
             <span className="text-sm">Supercoins: 123</span>
             <span className="text-sm">Rewards: 456</span>
@@ -115,6 +115,26 @@ function page() {
           </Link>
         </div>
 
+        <div className='my-10'>
+        <div>
+          All Products
+        </div>
+            <div id='product-list' className="bg-slate-700 p-4">
+                {
+                    loading ? (
+                        <div>Loading......</div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {products.map((e) => (
+                                <div key={e._id} className="bg-white p-4 rounded-lg shadow">
+                                    <div className="text-xl font-semibold mb-2">{e._id}</div>
+                                    <div className="text-lg">{e.price}</div>
+                                </div>
+                            ))}
+                        </div>
+                    )
+                }
+            </div></div>
       </div>
       <style jsx>{`
         .item {

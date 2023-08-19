@@ -237,7 +237,7 @@ const loyalCustomers = asyncHandler(async (req, res) => {
 
 // ------- All Products of a seller---------
 //@des      All Products
-//@route    /api/seller/allproductsseller
+//@route    Post /api/seller/allproducts
 //@access   To seller only
 const allProductsSeller = asyncHandler( async (req, res) => {
     const { sellerId } = req.body;
@@ -260,7 +260,7 @@ const allProductsSeller = asyncHandler( async (req, res) => {
 
 // ------- All Products ---------
 //@des      All Products
-//@route    /api/seller/allproducts
+//@route    get /api/seller/allproducts
 //@access   To seller only
 const allProducts = asyncHandler( async (req, res) => {
     // const { sellerId } = req.body;
