@@ -12,6 +12,7 @@ import {
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
+import { Main } from './Main';
 
 // import { Inter } from 'next/font/google'
 // const inter = Inter({ subsets: ['latin'] })
@@ -38,7 +39,7 @@ const wagmiConfig = createConfig({
 
 // export const metadata = {
 //   title: 'RootKart',
-//   description: 'Grid 5.0',
+//   description: 'Grid 5.0',s
 // }
 
 function RootLayout({ children }) {

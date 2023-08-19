@@ -4,6 +4,7 @@ import axios from 'axios';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 function loginPage() {
   // const [user,setUser] = useState("");
@@ -99,6 +100,11 @@ function loginPage() {
           >
             Submit
           </button>
+          
+          {/* <div >
+            <ConnectButton label="Sign in"/>
+          </div> */}
+
         </form>
         <div className="mt-4 text-center">
           New User?{' '}

@@ -377,5 +377,5 @@ app.get('/viewbuyer/:buyerId', async (req,res) => {
 
 */
 
-const port = 4000;
+const port = 5000;
 const server = app.listen(port, console.log(`Server is running on ${port}`));
