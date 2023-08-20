@@ -3,14 +3,11 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react";
-import abi from "../../assets/contract_data/abi.json";
-import contract_address from "../../assets/contract_data/address.json";
 import "../../style/page.css";
 
 export default function Home() {
   
   const [userInfo, setUserInfo] = useState(null);
-  // console.log(abi,contract_address);
 
   // Use useEffect to retrieve userInfo from localStorage
   useEffect(() => {
@@ -29,12 +26,12 @@ export default function Home() {
           </p>
           <div className="space-x-4 main_boxes">
             <Link href="/login">
-              <div className={`transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 text-white font-bold py-2 px-4 rounded-lg transition duration-300 main_button`}>
+              <div className={` ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg  main_button`}>
                 Log In
               </div>
             </Link>
             <Link href="/signup">
-              <div className={`transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 text-white font-bold py-2 px-4 rounded-lg transition duration-300 main_button_2`}>
+              <div className={` ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg  main_button_2`}>
                 Sign Up
               </div>
             </Link>

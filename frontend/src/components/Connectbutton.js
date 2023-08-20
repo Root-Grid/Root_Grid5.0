@@ -32,12 +32,11 @@ function Connectbutton() {
 
     let userInfo = localStorage.getItem('userInfo')
     let info = JSON.parse(userInfo)
-
+    console.log(info.data._id)
     const registerUser = async () => {
         await registerWrite({ args: [info.data.name, info.data._id, "buyer", Date.now()] })
     }
-
-
+    
     return (
         <ConnectButton.Custom>
             {({
@@ -81,9 +80,10 @@ function Connectbutton() {
                             }
 
                             if (connected & isConnect) {
-                                registerUser()
                                 SetIsConnect(false)
+                                registerUser()
                             }
+
                             if (chain.unsupported) {
                                 return (
                                     <button onClick={openChainModal} type="button">

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['images.unsplash.com',`rukminim2.flixcart.com`],
+      remotePatterns: [{protocol: "https", hostname:['images.unsplash.com', "rukminim2.flixcart.com"], port: ""}]
       },
 }
 
