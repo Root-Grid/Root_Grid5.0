@@ -52,6 +52,7 @@ contract Supercoin {
     mapping(string => participant) public all_participants;
     uint256 value_of_one_coin = 10;
     uint256 total_supply;
+    string contract_name = "Supercoin";
 
     constructor( uint256 _value ) {
         total_supply = _value;
@@ -60,6 +61,10 @@ contract Supercoin {
     function getParticipantDetails( string calldata _id ) external view returns (participant memory) {
         require(bytes(all_participants[_id].id).length>0, "Invalid Id");
         return all_participants[_id];
+    }
+
+    function getname() external view returns (string memory) {
+        return contract_name;
     }
 
     function registerParticipant (string calldata _name, string calldata _id, string calldata _role, uint256 _timestamp) public returns (participant memory) {

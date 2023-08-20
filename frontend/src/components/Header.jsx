@@ -10,9 +10,12 @@ import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
-import Connectbutton from "./Connectbutton";
+import Connectbutton from "./Connectbutton"; 
+import { useAccount } from "wagmi";
 
 const Header = () => {
+    const {address} = useAccount();
+
     const [mobileMenu, setMobileMenu] = useState(false);
     const [showCatMenu, setShowCatMenu] = useState(false);
     const [show, setShow] = useState("translate-y-0");
@@ -95,7 +98,7 @@ const Header = () => {
                     </div>
                     {/* Mobile icon end */}
                     <div>
-                        <Connectbutton />
+                        <Connectbutton address={address}/>
                     </div>
                 </div>
             </Wrapper>
