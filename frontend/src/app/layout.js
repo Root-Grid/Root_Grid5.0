@@ -12,7 +12,6 @@ import {
 } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import { Main } from './Main';
 
 // import { Inter } from 'next/font/google'
 // const inter = Inter({ subsets: ['latin'] })
@@ -56,4 +55,4 @@ function RootLayout({ children }) {
   )
 }
 
-export default RootLayout
+export default RootLayout;
