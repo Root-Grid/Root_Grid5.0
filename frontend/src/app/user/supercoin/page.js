@@ -1,18 +1,37 @@
 "use client";
 
+import CouponCard from '@/components/CouponCard';
+import axios from 'axios';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
-
-
-import React from 'react';
-
-const transactions = [
-  { date: '2023-08-15', amount: -100 },
-  { date: '2023-08-14', amount: 200 },
-  // ... other transactions
-];
+// const coupons = [
+//   { name: '50% Discount',discription:"T&C appilied", coins: 50 },
+//   { name: '20% Discount',discription:"T&C appilied", coins: 20 },
+//   { name: '10% Discount',discription:"T&C appilied", coins: 10 },
+//   { name: 'Flight Ticket',discription:"T&C appilied", coins: 50 },
+//   { name: 'Buy 1 Get 1 Free',discription:"T&C appilied", coins: 50 },
+// ];
 
 const supercoinDashboard = () => {
-  const balance = transactions.reduce((total, transaction) => total + transaction.amount, 0);
+  let balance = 55;
+  /* super coin */
+
+  const [coupons,setCoupons] = useState();
+  const [loading,setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCoupons();
+  });
+
+  async function fetchCoupons(){
+    const data = await axios.get("http://localhost:5000/api/admin/getcoupons");
+
+    setCoupons(data.data);
+    setLoading(false);
+  }
+
+
   return (
     <div className="bg-white min-h-screen">
       <nav className="bg-blue-500 text-white py-4 px-8">
@@ -51,29 +70,21 @@ const supercoinDashboard = () => {
         <div className="container mx-auto bg-white border border-gray-300 shadow-lg rounded-lg p-8 w-70">
           
           <div className="mb-4"><h2 className="text-3xl font-semibold mb-8">Your Account balance is {balance}</h2></div>
+          
           <div className="flex space-x-4 mb-4">
+          <Link href='/user/supercoin/transaction-history'>
             <button className="px-4 py-2 bg-blue-500 text-white rounded">Button 1</button>
+          </Link>
+          <Link href='/user/supercoin/claimed-coupons'>
             <button className="px-4 py-2 bg-blue-500 text-white rounded">Button 2</button>
+          </Link>
           </div>
           <img src="/path/to/your/image.png" alt="Transaction Image" className="w-full mb-4 rounded-lg shadow-md" />
           <div className="space-y-4">
-            {transactions.map((transaction, index) => (
-              <div
-                key={index}
-                className={`flex justify-between items-center border-b pb-4 ${
-                  transaction.amount > 0 ? 'text-green-500' : 'text-red-500'
-                }`}
-              >
-                <div className="flex flex-col">
-                  <div className="text-black">Transaction {index + 1}</div>
-                  <div className="text-gray-500">{transaction.date}</div>
-                </div>
-                <div className="bg-gray-500 px-2 py-1 rounded">
-                  {transaction.amount > 0 ? '+' : '-'}
-                  {Math.abs(transaction.amount)}
-                </div>
-              </div>
-            ))}
+          {loading?(<>loading.....</>):(<>{
+            coupons.map((coupon) => (
+              <CouponCard coupon={coupon} />
+            ))}</>)}
           </div>
         </div>
       </div>

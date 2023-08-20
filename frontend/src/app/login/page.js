@@ -4,7 +4,7 @@ import axios from 'axios';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 function loginPage() {
   // const [user,setUser] = useState("");

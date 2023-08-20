@@ -5,21 +5,14 @@ const transactions = [
   { status: 'debited', date: '2023-08-14', amount: 200 },
 ];
 
-const TransactionHistory = () => {
+const claimedCoupons = () => {
   const balance = transactions.reduce((total, transaction) => total + transaction.amount, 0);
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
     <div className="bg-white p-6 w-90 h-full rounded-lg shadow-md ">
       <div className="mb-4 text-3xl font-semibold">Your Account Balance: {balance}</div>
-      <div className="flex justify-between mb-4">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
-          Button 1
-        </button>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
-          Button 2
-        </button>
-      </div>
+
       <img src="/path/to/your/image.png" alt="Transaction Image" className="w-full h-auto mb-4 rounded-lg" />
       <div className="space-y-4">
         {transactions.map((transaction, index) => (
@@ -47,4 +40,4 @@ const TransactionHistory = () => {
   );
 };
 
-export default TransactionHistory;
+export default claimedCoupons;
