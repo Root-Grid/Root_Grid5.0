@@ -5,9 +5,9 @@ import Link from "next/link";
 import Menu from "./Menu";
 import MenuMobile from "./MenuMobile";
 
-import { IoMdHeartEmpty } from "react-icons/io";
+import { CiDeliveryTruck } from "react-icons/ci"
 import { BsCart } from "react-icons/bs";
-import { BiMenuAltRight } from "react-icons/bi";
+import { BiMenuAltRight, BiSolidCoinStack } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
 import Connectbutton from "./Connectbutton"; 
@@ -43,11 +43,12 @@ const Header = () => {
 
     return (
         <header
-            className={`w-full h-[50px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 ${show}`}
+            className={`w-full h-[50px] md:h-[80px] bg-blue-500 flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 ${show}`}
         >
             <Wrapper className="h-[60px] flex justify-between items-center">
-                <Link href="/">
-                    <img src="/root.png" className="w-[40px] md:w-[60px]" />
+                <Link href="/" className="flex">
+                    <img src="/root1.png" className="w-[20px] md:w-[30px]" />
+                    <span className="font-medium">Kart</span>
                 </Link>
 
                 <Menu
@@ -63,10 +64,10 @@ const Header = () => {
                     />
                 )}
 
-                <div className="flex items-center gap-2 text-black">
+                <div className="flex items-center gap-2 text-white">
                     {/* Icon start */}
                     <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
-                        <IoMdHeartEmpty className="text-[19px] md:text-[24px]" />
+                        <BiSolidCoinStack className="text-[19px] md:text-[24px]" />
                         <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
                             51
                         </div>
@@ -74,16 +75,18 @@ const Header = () => {
                     {/* Icon end */}
 
                     {/* Icon start */}
-                    <Link href="/cart">
+                    <Link href="/user/order-history">
                         <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
-                            <BsCart className="text-[15px] md:text-[20px]" />
+                            <CiDeliveryTruck className="text-[15px] md:text-[20px]" />
+                            <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
                             5
+                            </div>
                         </div>
                     </Link>
                     {/* Icon end */}
 
                     {/* Mobile icon start */}
-                    <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
+                    <div className="w-8md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
                         {mobileMenu ? (
                             <VscChromeClose
                                 className="text-[16px]"

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react';
 
 const AddProduct = () => {
-    const [threshold,setThreshold] = useState();
+    const [threshold,setThreshold] = useState(0);
     const [seller,setSeller] = useState();
     const [sellerId,setSellerId] = useState();
     const [customers,setCustomers] = useState();
@@ -114,7 +114,7 @@ const AddProduct = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {customers.map((e) => (
                                 <div key={e.buyerId} className="bg-white p-4 rounded-lg shadow">
-                                    <div className="text-xl font-semibold mb-2">{e.buyer.name}</div>
+                                    <div className="text-xl font-semibold mb-2">{e.buyer?.name}</div>
                                     <div className="text-lg">{e.loyalty} Loyalty Points</div>
                                 </div>
                             ))}
