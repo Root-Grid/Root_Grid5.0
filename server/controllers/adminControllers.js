@@ -51,12 +51,14 @@ const getcoupons = asyncHandler( async (req, res) => {
 //@route    post /api/admin/change-order-status
 //@access   Public
 const changeOrderStatus = asyncHandler(async (req,res)=>{
-    const { orderId } = req.body;
+    const { _orderId } = req.body;
 
     try{
-        const order = await Order.findById(orderId);
-        order.status = "Completed"
-        order.save();
+        const order = await Order.findById(_orderId);
+        // console.log(order.status);
+        order.status = "Completed";
+        // console.log(order);
+        await order.save();
         res.send(201);
     } catch(error) {
         console.error('Error:', error);

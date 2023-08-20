@@ -35,7 +35,7 @@ const toLoyalCustomers = ({ users, sellerId, coins, timestamp }) => {
 
 
   return (
-    <button onClick={registerUser}>toLoyalCustomers</button>
+    <button onClick={registerUser}>Send Coins to all!</button>
   )
 }
 

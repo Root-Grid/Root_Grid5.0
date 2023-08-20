@@ -6,7 +6,6 @@ import Menu from "./Menu";
 import MenuMobile from "./MenuMobile";
 
 import { CiDeliveryTruck } from "react-icons/ci"
-import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight, BiSolidCoinStack } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
@@ -43,6 +42,7 @@ const Header = () => {
         functionName: "getParticipantDetails",
         args: [id]
     });
+
     useEffect(() => {
         setData({Details: userDetails})
         console.log("Success",(userDetails));
@@ -133,12 +133,12 @@ const Header = () => {
                         <div>
                             <Connectbutton />
                         </div>
-                        {address ? (!userDetails ?
+                        {address ?
                             <div>
                                 <RegisterParticipant name={info.data.name} id={info.data._id} role={role} timestamp={Date.now()} />
                             </div>
                             :
-                            <></>) : null
+                            <></>
                         }
                     </div>
                 </div>

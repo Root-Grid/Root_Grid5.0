@@ -41,7 +41,7 @@ function signuppage()
         localStorage.setItem("userInfo", JSON.stringify(data));
         localStorage.setItem("role","seller");
         router.push('/seller');
-        
+      
       }
       else{
         const data  = await axios.post(
@@ -119,6 +119,15 @@ function signuppage()
             className="w-full mb-4 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
             onChange={(e) => setCnfPassword(e.target.value)}
           />
+          {!isSeller?(
+            <input
+            type="string"
+            name="referal"
+            placeholder="Referral Code(Optional)"
+            className="w-full mb-4 py-2 px-3 border rounded-lg focus:ring focus:ring-blue-200"
+          />
+          ):(<></>)}
+          
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"

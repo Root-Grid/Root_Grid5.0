@@ -9,7 +9,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 // import axios from 'axios';
 
 
-const BuyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
+const Referral = ({ _referrer, _referred_to, _timestamp }) => {
     useEffect(() => {
         console.log("registerData:", registerData);
         console.log("isRegisterLoading:", isRegisterLoading);
@@ -17,6 +17,10 @@ const BuyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
         console.log("RegisterError:", registerError);
         console.log("___________");
     }, [registerData, isRegisterLoading, isRegisterStarted]);
+
+    useEffect(() => {
+        registerUser();
+    },[])
 
     const {
         data: registerData,
@@ -27,7 +31,7 @@ const BuyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
     } = useContractWrite({
         address: address?.address,
         abi: abi?.abi,
-        functionName: "buyCoupon",
+        functionName: "referralReward",
     });
 
     const registerUser = async () => {
@@ -35,7 +39,7 @@ const BuyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
 
         // feathData();
 
-        await registerWrite({args: [_customer_id, amount, _couponId, _timestamp ]})
+        await registerWrite({args: [_referrer, _referred_to, _timestamp ]})
     }
 
     // const feathData = async() => {
@@ -48,9 +52,9 @@ const BuyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
     // }
 
 
-  return (
-    <button onClick={registerUser}>Buy Coupon!</button>
-  )
+//   return (
+//     <button onClick={registerUser}>Buy Coupon!</button>
+//   )
 }
 
-export default BuyCoupon;
+export default Referral;

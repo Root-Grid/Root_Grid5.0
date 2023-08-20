@@ -12,6 +12,7 @@ const loyalcustomers = () => {
     const [customers,setCustomers] = useState();
     const [customerId,setCustomerId] = useState([]);
     const [isLoading,setLoading] = useState(true);
+    const [coins,setCoins] = useState(1);
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ const loyalcustomers = () => {
                 customerId.push(element.buyerId);
             });
 
-            // console.log(customers);
+            // console.log(customerId);
             setLoading(false);
             // router.push('/seller');
         } catch(error) {
@@ -97,7 +98,17 @@ const loyalcustomers = () => {
                     <div className="mb-8">
                         <label className="block text-gray-700 text-sm font-medium mb-2">Threshold Loyalty</label>
                         <input
+                            placeholder='Minimum Loyalty'
                             onChange={(e) => {setThreshold(e.target.value)}}
+                            type="number"
+                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                    <div className="mb-8">
+                        <label className="block text-gray-700 text-sm font-medium mb-2">Threshold Loyalty</label>
+                        <input
+                            placeholder='Number of Coins'
+                            onChange={(e) => {setCoins(e.target.value)}}
                             type="number"
                             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
                         />
@@ -110,7 +121,9 @@ const loyalcustomers = () => {
                         >
                             Filter Customers
                         </button>
-                        <ToLoyalCustomer users={customerId} sellerId={sellerId} coins={Number(10)} timestamp={Date.now()}/>
+                        <span className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <ToLoyalCustomer users={customerId} sellerId={sellerId} coins={Number(coins)} timestamp={Date.now()} />
+                        </span>
                         {/* <button onClick={()=>{console.log(customerId)}} >see customerId</button> */}
                     </div>
                 </div>
@@ -124,7 +137,7 @@ const loyalcustomers = () => {
                             {customers.map((e) => (
                                 <div key={e.buyerId} className="bg-white p-4 rounded-lg shadow">
                                     <div className="text-xl font-semibold mb-2">{e.buyer?.name}</div>
-                                    <div className="text-lg">{e.loyalty} Loyalty Points</div>
+                                    <div className="text-lg">{e.loyalty} Loyalty</div>
                                 </div>
                             ))}
                         </div>

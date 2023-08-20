@@ -25,8 +25,9 @@ const ParticipantDetails = () => {
 
     const ParticipantDetails = async() => {
         try {
+            localStorage.setItem("ParticipantDetails", contractRead.data);
             console.log(contractRead.data);
-            localStorage.setItem('ParticipantDetails', JSON.stringify(contractRead.data));
+            // console.log(localStorage.ParticipantDetails);
         } catch (error) {
             console.error(error.message);
         }

@@ -20,7 +20,7 @@ export default function Home() {
   return (
       <div className=" min-h-screen flex flex-col justify-center items-center" id="main_page">
         <div className="text-white text-center animate-fade-in-down text_box">
-          <h1 className="text-4xl font-bold mb-4">Welcome to Our Website</h1>
+          <h1 className="text-4xl font-bold mb-4">Welcome to RootKart</h1>
           <p className="text-lg text-gray-200 mb-6">
             If you already have an account, please log in. Otherwise, sign up to get started.
           </p>
@@ -36,9 +36,6 @@ export default function Home() {
               </div>
             </Link>
           </div>
-        </div>
-        <div>
-          <div className="main_name">{userInfo?.data.name}</div>
         </div>
       </div>
     );
