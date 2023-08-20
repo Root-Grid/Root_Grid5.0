@@ -2,10 +2,14 @@ import Link from "next/link";
 import React from "react";
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 import Wrapper from "./Wrapper";
+import ParticipantDetails from "./ContractFunctions/ParticipantDetails";
 const Footer = () => {
+    // let user = localStorage.getItem('userInfo');
+    // let info = JSON.parse(user)
     return (
-        <footer className="bg-black text-white pt-14 pb-3">
-            <Wrapper className="flex justify-between flex-col md:flex-row gap-[50px] md:gap-0">
+    <footer className="bg-black text-white pt-14 pb-3">
+    {/* <ParticipantDetails id={info.data._id}/> */}
+        <Wrapper className="flex justify-between flex-col md:flex-row gap-[50px] md:gap-0">
                 {/* LEFT START */}
                 <div className="flex gap-[50px] md:gap-[75px] lg:gap-[100px] flex-col md:flex-row">
                     {/* MENU START */}

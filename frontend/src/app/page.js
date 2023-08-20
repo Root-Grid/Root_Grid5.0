@@ -3,13 +3,10 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react";
-import abi from "../../assets/contract_data/abi.json";
-import contract_address from "../../assets/contract_data/address.json";
 
 export default function Home() {
   
   const [userInfo, setUserInfo] = useState(null);
-  // console.log(abi,contract_address);
 
   // Use useEffect to retrieve userInfo from localStorage
   useEffect(() => {
