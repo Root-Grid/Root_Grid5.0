@@ -92,7 +92,7 @@ function AddToCartButton() {
       <div className="flex items-center gap-2">
       <button
         className="rounded-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 flex items-center gap-2"
-        onClick={submitClick}
+        onClick={submitReturn}
       >
         {order_state}
         <svg
