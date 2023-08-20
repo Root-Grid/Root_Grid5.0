@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import BuyCoupon from './ContractFunctions/buyCoupon';
+import BuyCoupon from './ContractFunctions/BuyCoupon';
 
 function CouponCard({ coupon }) {
 
@@ -11,7 +11,7 @@ function CouponCard({ coupon }) {
   const [loading,setLoading] = useState(true);
 
   useEffect(()=> {
-    const data = JSON.parse(localStorage.getItem(userInfo)).data;
+    const data = JSON.parse(localStorage.userInfo).data;
 
     setId(data._id);
     setLoading(false);
@@ -26,7 +26,10 @@ function CouponCard({ coupon }) {
         <span className="text-blue-500 font-semibold">{coupon.coins} Supercoins</span>
         <div className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 focus:outline-none">
           <BuyCoupon 
-
+            _customer_id={customerId}
+            amount={coupon.coins}
+            _couponId={coupon._id}
+            _timestamp={Date.now()}
           />
         </div>
       </div>

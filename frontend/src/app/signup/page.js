@@ -41,7 +41,7 @@ function signuppage()
         localStorage.setItem("userInfo", JSON.stringify(data));
         localStorage.setItem("role","seller");
         router.push('/seller');
-        
+      
       }
       else{
         const data  = await axios.post(

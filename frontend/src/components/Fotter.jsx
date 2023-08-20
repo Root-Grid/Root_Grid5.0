@@ -2,7 +2,6 @@ import Link from "next/link";
 import React from "react";
 import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from "react-icons/fa";
 import Wrapper from "./Wrapper";
-import ParticipantDetails from "./ContractFunctions/ParticipantDetails";
 const Footer = () => {
     // let user = localStorage.getItem('userInfo');
     // let info = JSON.parse(user)
@@ -14,6 +13,16 @@ const Footer = () => {
                 <div className="flex gap-[50px] md:gap-[75px] lg:gap-[100px] flex-col md:flex-row">
                     {/* MENU START */}
                     <div className="flex flex-col gap-3 shrink-0">
+                        <Link href="/tokenomics">
+                            <div className="font-oswald font-medium uppercase text-sm cursor-pointer">
+                            Tokenomics & TnC
+                            </div>
+                        </Link>
+                        <Link href="https://github.com/Root-Grid/Root_Grid5.0">
+                            <div className="font-oswald font-medium uppercase text-sm cursor-pointer">
+                                GitHub
+                            </div>
+                        </Link>
                         <div className="font-oswald font-medium uppercase text-sm cursor-pointer">
                             Find a store
                         </div>
@@ -23,12 +32,7 @@ const Footer = () => {
                         <div className="font-oswald font-medium uppercase text-sm cursor-pointer">
                             sign up for email
                         </div>
-                        <div className="font-oswald font-medium uppercase text-sm cursor-pointer">
-                            send us feedback
-                        </div>
-                        <div className="font-oswald font-medium uppercase text-sm cursor-pointer">
-                            student discount
-                        </div>
+                        
                     </div>
                     {/* MENU END */}
 
@@ -48,12 +52,16 @@ const Footer = () => {
                             <div className="text-sm text-white/[0.5] hover:text-white cursor-pointer">
                                 Returns
                             </div>
+                            <Link href="/tokenomics">
                             <div className="text-sm text-white/[0.5] hover:text-white cursor-pointer">
-                                Payment Options
+                                Tokenomics & TnC
                             </div>
+                            </Link>
+                            <Link href="https://github.com/Root-Grid/Root_Grid5.0">
                             <div className="text-sm text-white/[0.5] hover:text-white cursor-pointer">
-                                Contact Us
+                                GitHub
                             </div>
+                            </Link>
                         </div>
                         {/* MENU END */}
 
