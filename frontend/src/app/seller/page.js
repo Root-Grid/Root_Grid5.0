@@ -3,7 +3,6 @@
 import axios from 'axios';
 import Link from 'next/link';
 import AProductCard from '../../components/AProductCard';
-import ProductCard from '../user/ProductCard';
 import React, { useEffect, useState } from 'react'
 import Connectbutton from '@/components/Connectbutton';
 
@@ -127,7 +126,7 @@ function page() {
                 </div>
               </div>
           </Link>
-          <Link href="/page-4">
+          <Link href="/seller/addcoin">
               <div className="item">
                 <div className="item-inner">
                   <div className="text-xl font-semibold mb-2">Add Coin</div>
@@ -169,6 +168,7 @@ function page() {
         }
       `}</style>
     </div>
+    <Footer />
     </div>
   );
     
