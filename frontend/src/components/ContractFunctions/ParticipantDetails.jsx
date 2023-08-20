@@ -6,16 +6,23 @@ import address from '../../../assets/contract_data/address.json';
 import abi from '../../../assets/contract_data/abi.json';
 import '@rainbow-me/rainbowkit/styles.css';
 
-const ParticipantDetails = ({id}) => {
-
-    const contractRead = useContractRead({
+const ParticipantDetails = () => {
+    const data = localStorage.getItem("userInfo")
+    const info = JSON.parse(data);
+    const id = info?.data?._id;
+    console.log("got id", id);
+    
+    const {
+        data: userDetails,
+    } = useContractRead({
         address: address?.address,
         abi: abi?.abi,
         functionName: "getParticipantDetails",
         args: [id]
     });
 
-    
+    console.log("Success", userDetails);
+
     const ParticipantDetails = async() => {
         try {
             console.log(contractRead.data);
@@ -25,7 +32,7 @@ const ParticipantDetails = ({id}) => {
         }
     }
     return (
-        <button onClick={ParticipantDetails}>getParticipantDetails</button>
+        <button onClick={ParticipantDetails} id="ParticipantDetails" style={{display: "none"}}>getParticipantDetails</button>
     )
 }
 

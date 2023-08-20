@@ -30,13 +30,14 @@ const RegisterParticipant = ({ name, id, role, timestamp }) => {
     });
 
     const registerUser = async () => {
-        await registerWrite({args: [name, id, role, timestamp]})
+        await registerWrite({ args: [name, id, role, timestamp] })
     }
 
-
-  return (
-    <button onClick={registerUser}>RegisterParticipant</button>
-  )
+    return (
+        <>
+            <button onClick={registerUser}>Register</button>
+        </>
+    )
 }
 
 export default RegisterParticipant;

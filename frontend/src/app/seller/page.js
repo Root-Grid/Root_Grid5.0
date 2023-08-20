@@ -7,7 +7,12 @@ import ProductCard from '../user/ProductCard';
 import React, { useEffect, useState } from 'react'
 import Connectbutton from '@/components/Connectbutton';
 
+import { useContractRead } from 'wagmi';
+import contract_abi from "../../../assets/contract_data/abi.json"
+import contract_address from "../../../assets/contract_data/address.json"
+
 function page() {
+    const [data, setData] = useState({});
     const [seller,setSeller] = useState();
     const [sellerId,setSellerId] = useState();
     const [products,setProducts] = useState();
@@ -25,6 +30,20 @@ function page() {
         fetchData();
       }
     }, [seller, sellerId]);
+
+    const {
+      data: userDetails,
+    } = useContractRead({
+      address: contract_address?.address,
+      abi: contract_abi?.abi,
+      functionName: "getParticipantDetails",
+      args: [sellerId]
+    });
+  
+    useEffect(() => {
+      setData({ Details: userDetails })
+      console.log("Success", (data));
+    }, [sellerId])
 
     const fetchData = async () => {
       if(seller){
@@ -64,8 +83,7 @@ function page() {
           </div>
           <div className="text-2xl font-bold">{loading?(<>Loading...</>):(<>{seller.name}'s Deshboard</>)}</div>
           <div className="flex items-center space-x-2">
-            <span className="text-sm">Supercoins: 123</span>
-            <span className="text-sm">Rewards: 456</span>
+            <span className="text-sm">Supercoins: {Number(data.Details?.balance)}</span>
             <>
               <Connectbutton/>
             </>

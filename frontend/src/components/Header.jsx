@@ -10,16 +10,44 @@ import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight, BiSolidCoinStack } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
-import Connectbutton from "./Connectbutton"; 
-import { useAccount } from "wagmi";
+import Connectbutton from "./Connectbutton";
+import { useAccount, useContractRead } from "wagmi";
+
+import contract_abi from "../../assets/contract_data/abi.json"
+import contract_address from "../../assets/contract_data/address.json"
+
+import ParticipantDetails from "./ContractFunctions/ParticipantDetails";
+import RegisterParticipant from "./ContractFunctions/RegisterParticipant";
 
 const Header = () => {
-    const {address} = useAccount();
+    const { address } = useAccount();
+    const [data, setData] = useState({});
 
     const [mobileMenu, setMobileMenu] = useState(false);
     const [showCatMenu, setShowCatMenu] = useState(false);
     const [show, setShow] = useState("translate-y-0");
     const [lastScrollY, setLastScrollY] = useState(0);
+
+    const userData = localStorage.getItem('userInfo');
+    const role = localStorage.getItem('role')
+    const info = JSON.parse(userData);
+
+    const id = info?.data?._id;
+    console.log("Id", id);
+    
+    const {
+        data: userDetails,
+    } = useContractRead({
+        address: contract_address?.address,
+        abi: contract_abi?.abi,
+        functionName: "getParticipantDetails",
+        args: [id]
+    });
+
+    useEffect(() => {
+        setData({Details: userDetails})
+        console.log("Success",(data));
+    }, [id])
 
     const controlNavbar = () => {
         if (window.scrollY > 200) {
@@ -70,7 +98,7 @@ const Header = () => {
                         <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
                             <BiSolidCoinStack className="text-[19px] md:text-[24px]" />
                             <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                                51
+                                {Number(data.Details?.balance)}
                             </div>
                         </div>
                     </Link>
@@ -81,7 +109,7 @@ const Header = () => {
                         <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative">
                             <CiDeliveryTruck className="text-[15px] md:text-[20px]" />
                             <div className="h-[14px] md:h-[18px] min-w-[14px] md:min-w-[18px] rounded-full bg-red-600 absolute top-1 left-5 md:left-7 text-white text-[10px] md:text-[12px] flex justify-center items-center px-[2px] md:px-[5px]">
-                            5
+                                {data.Details?.history?.length}
                             </div>
                         </div>
                     </Link>
@@ -102,8 +130,17 @@ const Header = () => {
                         )}
                     </div>
                     {/* Mobile icon end */}
-                    <div>
-                        <Connectbutton address={address}/>
+                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center" }}>
+                        <div>
+                            <Connectbutton />
+                        </div>
+                        {address && (!address || !data) ?
+                            <div>
+                                <RegisterParticipant name={info.data.name} id={info.data._id} role={role} timestamp={Date.now()} />
+                            </div>
+                            :
+                            <></>
+                        }
                     </div>
                 </div>
             </Wrapper>
