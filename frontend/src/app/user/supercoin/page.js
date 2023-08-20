@@ -5,14 +5,6 @@ import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
-// const coupons = [
-//   { name: '50% Discount',discription:"T&C appilied", coins: 50 },
-//   { name: '20% Discount',discription:"T&C appilied", coins: 20 },
-//   { name: '10% Discount',discription:"T&C appilied", coins: 10 },
-//   { name: 'Flight Ticket',discription:"T&C appilied", coins: 50 },
-//   { name: 'Buy 1 Get 1 Free',discription:"T&C appilied", coins: 50 },
-// ];
-
 const supercoinDashboard = () => {
   let balance = 55;
   /* super coin */
@@ -73,17 +65,17 @@ const supercoinDashboard = () => {
           
           <div className="flex space-x-4 mb-4">
           <Link href='/user/supercoin/transaction-history'>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded">Button 1</button>
+            <button className="px-4 py-2 bg-blue-500 text-white rounded">Transaction History</button>
           </Link>
           <Link href='/user/supercoin/claimed-coupons'>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded">Button 2</button>
+            <button className="px-4 py-2 bg-blue-500 text-white rounded">Claimed Coupons</button>
           </Link>
           </div>
           <img src="/path/to/your/image.png" alt="Transaction Image" className="w-full mb-4 rounded-lg shadow-md" />
           <div className="space-y-4">
           {loading?(<>loading.....</>):(<>{
-            coupons.map((coupon) => (
-              <CouponCard coupon={coupon} />
+            coupons.map((coupon,index) => (
+              <CouponCard key={index}coupon={coupon} />
             ))}</>)}
           </div>
         </div>

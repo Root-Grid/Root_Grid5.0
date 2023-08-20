@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import OrderPlaced from '@/components/ContractFunctions/OrderPlaced';
 
 const OrderHistory = () => {
   const [buyer, setBuyer] = useState();
@@ -41,7 +42,7 @@ const OrderHistory = () => {
         console.error('Error:', error);
       }
     }
-  };
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -55,7 +56,7 @@ const OrderHistory = () => {
             ) : (
               <div className="space-y-4">
                 {orders?.map((order) => (
-                  <Link href={`/user/products/${order?.product._id}`} key={order?._id}>
+                  <Link href={`/user/order-history`} key={order?._id}>
                     <div className={`flex justify-between items-center border-b pb-4 cursor-pointer`}>
                       <div className="flex flex-col">
                         <div className="text-black">{order?.product.productName}</div>
@@ -63,7 +64,21 @@ const OrderHistory = () => {
                           Ordered on date: {new Date(order?.createdAt).getDate()}-{new Date(order?.createdAt).getMonth() + 1}-{new Date(order?.createdAt).getFullYear()}
                         </div>
                       </div>
-                      <div className="bg-gray-500 px-2 py-1 rounded">{order?.status}</div>
+                      <div className="bg-gray-500 px-2 py-1 rounded">
+                        <div>
+                          {order?.status==="orderPlaced"?(
+                            <OrderPlaced
+                              _buyerId={order.buyer}
+                              _orderId={order._id}
+                              coinsFlipkart={Math.floor((Number(order.product.productPrice)/100)*2)}
+                              coinsSeller={order.product.coins}
+                              _sellerId={order.product.seller}
+                              _timestamp={Date.now()}
+                            />
+                          ):(<></>)}
+                        </div>
+                        {order?.status}
+                      </div>
                     </div>
                   </Link>
                 ))}

@@ -3,9 +3,11 @@
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
-import ProductCard from './ProductCard';
+// import ProductCard from './ProductCard';
+import AProductCard from '../../components/AProductCard'
 import Image from 'next/image';
 import Main from '../Main';
+import HeroBanner from '@/components/HeroBanner';
 
 function userHome() {
 
@@ -59,8 +61,7 @@ function userHome() {
           :
           (
             <div className="flex flex-col items-center">
-              {currentPage === 1 && (
-                <div className="hero rounded-xl bg-base-200">
+                {/* <div className="hero rounded-xl bg-base-200">
                   <div className="hero-content flex-col lg:flex-row">
                     <Image
                       src={products[0]?.productImage}
@@ -81,13 +82,15 @@ function userHome() {
                       </Link>
                     </div>
                   </div>
-                </div>
+                </div> */}
+              {currentPage === 1 && (
+                <HeroBanner />
               )}
 
               <div className="my-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {/* <div key={product._id}>{product.productName}</div> */}
                 {products?.map((product) => (
-                  <ProductCard product={product} key={product._id} />
+                  <AProductCard product={product} key={product._id} />
                 ))}
               </div>
 

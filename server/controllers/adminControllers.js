@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const Coupon = require('../models/coupon');
+const Order = require('../models/order');
 
 //-------- Add Product ---------
 //@des      To Add Product 
@@ -45,4 +46,24 @@ const getcoupons = asyncHandler( async (req, res) => {
     }
 });
 
-module.exports = {addcoupon, getcoupons}
+//-------- Change Order Status ---------
+//@des      To Add Product 
+//@route    post /api/admin/change-order-status
+//@access   Public
+const changeOrderStatus = asyncHandler(async (req,res)=>{
+    const { orderId } = req.body;
+
+    try{
+        const order = await Order.findById(orderId);
+        order.status = "Completed"
+        order.save();
+        res.send(201);
+    } catch(error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+// const findCoins = asyncHandler(async ())
+
+module.exports = {addcoupon, getcoupons, changeOrderStatus}

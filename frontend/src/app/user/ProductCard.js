@@ -17,6 +17,7 @@ export default function ProductCard({ product }) {
           width={800}
           height={400}
           className="h-48 object-cover"
+          layout="responsive"
         />
       </figure>
       <div className="card-body">

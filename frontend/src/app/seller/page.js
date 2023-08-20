@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import Link from 'next/link';
+import AProductCard from '../../components/AProductCard';
 import ProductCard from '../user/ProductCard';
 import React, { useEffect, useState } from 'react'
 
@@ -117,36 +118,16 @@ function page() {
               </div>
           </Link>
         </div>
-        <div>
-  <h2 className="text-3xl font-semibold mb-4">YOUR PRODUCTS</h2>
-  <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-    {products?.map((product) => (
-      <ProductCard product={product} key={product._id} />
-    ))}
-  </div>
-</div>
-
-        <div className='my-10'>
-        <div>
-          All Products
+        <div className='w-90 mx-10 px-auto my-20 flex justify-center items-center'>
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">YOUR PRODUCTS</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {products?.map((product) => (
+                <AProductCard product={product} key={product._id} />
+              ))}
+            </div>
+          </div>
         </div>
-            <div id='product-list' className="bg-slate-700 p-4">
-                {
-                    loading ? (
-                        <div>Loading......</div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {products.map((e) => (
-                                <div key={e._id} className="bg-white p-4 rounded-lg shadow">
-                                    <div className="text-xl font-semibold mb-2">{e._id}</div>
-                                    <div className="text-lg">{e.price}</div>
-                                </div>
-                            ))}
-                        </div>
-                    )
-                }
-            </div></div>
-      </div>
       <style jsx>{`
         .item {
           border: 1px solid #e2e2e2;
@@ -167,6 +148,7 @@ function page() {
           flex-direction: column;
         }
       `}</style>
+    </div>
     </div>
   );
     
