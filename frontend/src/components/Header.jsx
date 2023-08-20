@@ -6,7 +6,6 @@ import Menu from "./Menu";
 import MenuMobile from "./MenuMobile";
 
 import { CiDeliveryTruck } from "react-icons/ci"
-import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight, BiSolidCoinStack } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
@@ -16,7 +15,6 @@ import { useAccount, useContractRead } from "wagmi";
 import contract_abi from "../../assets/contract_data/abi.json"
 import contract_address from "../../assets/contract_data/address.json"
 
-import ParticipantDetails from "./ContractFunctions/ParticipantDetails";
 import RegisterParticipant from "./ContractFunctions/RegisterParticipant";
 
 const Header = () => {
