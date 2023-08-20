@@ -4,8 +4,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import ProductCard from '../user/ProductCard';
 import React, { useEffect, useState } from 'react'
-
-
+import Connectbutton from '@/components/Connectbutton';
 
 function page() {
     const [seller,setSeller] = useState();
@@ -66,6 +65,9 @@ function page() {
           <div className="flex items-center space-x-2">
             <span className="text-sm">Supercoins: 123</span>
             <span className="text-sm">Rewards: 456</span>
+            <>
+              <Connectbutton/>
+            </>
           </div>
         </div>
       </nav>
