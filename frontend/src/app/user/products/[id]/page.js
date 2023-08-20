@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import AddToCartButton from './AddToCart'
 import { useParams } from 'next/navigation';
 import axios from 'axios';
+import Header from '@/components/Header';
+import Footer from '@/components/Fotter';
 
 export default function ProductPage( ) {
   const [isLoading,setLoading] = useState(true);
@@ -37,28 +39,35 @@ export default function ProductPage( ) {
 
     
   return (
-    <div>{isLoading?(<div>loading....</div>):(
+    <div>
+    <Header />
+  {isLoading ? (
+    <div className="text-center my-8">Loading...</div>
+  ) : (
     <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
-        <Image
-          src={product.productImage}
-          alt={product.productName}
-          width={500}
-          height={500}
-          className="rounded-lg"
-          priority
-        />
+      <Image
+        src={product.productImage}
+        alt={product.productName}
+        width={500}
+        height={500}
+        className="rounded-lg"
+        priority
+      />
 
-        <div>
-          <h1 className="text-5xl font-bold">{product.productName}</h1>
-          {/* <PriceTag price={product.price} className="mt-4" /> */}
-          <span>{product.productPrice}</span>
-          <p className="py-6">{product.productDiscription}</p>
-          <AddToCartButton
-            productId={product._id}
-          //   incrementProductQuantity={incrementProductQuantity}
-          />
-        </div>
-      </div>)}
+      <div className="lg:ml-10">
+        <h1 className="text-5xl font-bold mb-4">{product.productName}</h1>
+        <span className="text-2xl font-semibold mb-4">
+          &#8377;{product.productPrice}
+        </span>
+        <p className="text-gray-700 leading-relaxed mb-4">
+          {product.productDiscription}
+        </p>
+        <AddToCartButton productId={product._id} />
+      </div>
     </div>
+  )}
+  <Footer/>
+</div>
+
   )
 }

@@ -8,7 +8,7 @@ import abi from '../../../assets/contract_data/abi.json';
 import '@rainbow-me/rainbowkit/styles.css';
 
 
-const RegisterParticipant = ({ name, id, role, timestamp }) => {
+const toLoyalCustomers = ({ users, sellerId, coins, timestamp }) => {
     useEffect(() => {
         console.log("registerData:", registerData);
         console.log("isRegisterLoading:", isRegisterLoading);
@@ -26,17 +26,17 @@ const RegisterParticipant = ({ name, id, role, timestamp }) => {
     } = useContractWrite({
         address: address?.address,
         abi: abi?.abi,
-        functionName: "registerParticipant",
+        functionName: "toLoyalCustomers",
     });
 
     const registerUser = async () => {
-        await registerWrite({args: [name, id, role, timestamp]})
+        await registerWrite({args: [users, sellerId, coins, timestamp]})
     }
 
 
   return (
-    <button onClick={registerUser}>RegisterParticipant</button>
+    <button onClick={registerUser}>toLoyalCustomers</button>
   )
 }
 
-export default RegisterParticipant;
+export default toLoyalCustomers;

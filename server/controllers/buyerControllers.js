@@ -7,6 +7,7 @@ const Coupon = require('../models/coupon');
 const { setOrderStatus } = require('../config/setOrderStatus');
 const generateToken = require('../config/generateToken');
 const { response } = require('express');
+const CouponOrder = require('../models/couponOrders');
 
 //-------- Register User ---------
 //@des      To register a new user
@@ -211,8 +212,6 @@ const addMoney = asyncHandler( async (req, res) => {
 //@access   To buyer only
 const buyCoupons = asyncHandler( async (req,res) => {
     let { buyerId, couponId} = req.body;
-    // let { couponId } = req.body;
-    // let buyerId = req.buyer._id;
 
     try {
         let buyer = await Buyer.findById(buyerId);
@@ -227,14 +226,17 @@ const buyCoupons = asyncHandler( async (req,res) => {
             /* make a txn in blockchain => user sends reqCoins to flipkart */
 
             userCoins = userCoins - reqCoins;
-            console.log(`coupon: ${coupon.name} awails`);
-            console.log(`remain coins: ${userCoins}`);
-            // res.send(`coupon: ${coupon.name} awails`)
-            if(coupon) {
-                // res.json({
-                //     time:t
-                // });
-                res.send(201);
+            
+            const newOrder = {
+                buyer: buyer._id,
+                coupon: coupon._id,
+            };
+            const order = await CouponOrder.create(newOrder);
+            if(order) {
+                res.json({
+                    orderId: order._id,
+                    couponName: coupon.name
+                });
             }
         }
         else {
@@ -283,26 +285,6 @@ const returnProduct = asyncHandler( async (req, res) => {
 //@des      To return all the order history
 //@route    POST /api/user/allorders
 //@access   To buyer only
-// const allOrders = asyncHandler(async (req, res) => {
-//     const { buyerId } = req.body;
-  
-//     try {
-//       const orders = await Order.find({ buyer: buyerId });
-//       let products = [];
-  
-//       // Fetch products for each order and push them into the products array
-//       for (const order of orders) {
-//         const product = await Product.findById(order.product);
-//         products.push(product);
-//       }
-  
-//       // Send both orders and products as an object
-//       res.json({ orders, products });
-//     } catch (error) {
-//       console.error('Error:', error);
-//       res.status(500).send('Internal Server Error');
-//     }
-//   });
 const allOrders = asyncHandler(async (req, res) => {
   const { buyerId } = req.body;
 

@@ -17,6 +17,10 @@ function signuppage()
   const router = useRouter()
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if(password != cnfpassword) {
+      console.log("password doesnt matches");
+    }
     
     try{
       const config = {
@@ -35,6 +39,7 @@ function signuppage()
 
         console.log(data.data.name);
         localStorage.setItem("userInfo", JSON.stringify(data));
+        localStorage.setItem("role","seller");
         router.push('/seller');
         
       }
@@ -48,6 +53,7 @@ function signuppage()
         // setUser(data.data);
         console.log(data.data.name);
         localStorage.setItem("userInfo", JSON.stringify(data));
+        localStorage.setItem("role","seller");
         router.push('/user');
   
       }

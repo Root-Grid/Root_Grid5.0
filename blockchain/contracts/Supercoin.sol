@@ -30,11 +30,11 @@ contract Supercoin {
 
     struct history_entry {
         string desc;
-        uint256 balance_before;
-        uint256 balance_after;
+        int256 balance_before;
+        int256 balance_after;
         transaction_type credit_or_debit;
         string transaction_id;
-        uint256 timestamp;
+        int256 timestamp;
     }
 
     struct participant {
@@ -42,7 +42,7 @@ contract Supercoin {
         string name;
         string id;
         history_entry[] history;
-        uint256 balance;
+        int256 balance;
         roles role;
         status current_status;
     }
@@ -50,10 +50,10 @@ contract Supercoin {
     string[] public seller_ids;
     string[] public buyer_ids;
     mapping(string => participant) public all_participants;
-    uint256 value_of_one_coin = 10;
-    uint256 total_supply = 0;
+    int256 value_of_one_coin = 10;
+    int256 total_supply = 0;
 
-    constructor( uint256 _value ) {
+    constructor( int256 _value ) {
         total_supply = _value;
     }
 
@@ -70,13 +70,13 @@ contract Supercoin {
         }
     }
 
-    function referralReward (string calldata _referrer, string calldata _referred_to, uint256 _timestamp) public {
+    function referralReward (string calldata _referrer, string calldata _referred_to, int256 _timestamp) public {
         addBalance(_referrer, 50, string(abi.encodePacked("Referral Reward coins awarded for referral to",' ',_referred_to)), _timestamp);
         addBalance(_referred_to, 50, string(abi.encodePacked("Referral Reward coins awarded for referral from",' ',_referrer)), _timestamp);
         _mint(100);
     }
 
-    function registerParticipant (string calldata _name, string calldata _id, string calldata _role, uint256 _timestamp) public returns (participant memory) {
+    function registerParticipant (string calldata _name, string calldata _id, string calldata _role, int256 _timestamp) public returns (participant memory) {
         require(bytes(_name).length>0, "Name can't be empty");
         require(bytes(_id).length>0, "Id can't be empty");
         require(bytes(_role).length>0, "Role can't be empty");
@@ -101,26 +101,26 @@ contract Supercoin {
         return all_participants[_id];
     }
 
-    function _mint (uint256 amount) internal {
+    function _mint (int256 amount) internal {
         // check conditions
         total_supply += amount;
     }
 
-    function subtractBalance (string calldata _id, uint256 amount, string memory desc, uint256 _timestamp) public {
+    function subtractBalance (string calldata _id, int256 amount, string memory desc, int256 _timestamp) public {
         // check conditions
         require(checkParticipantInternal(_id) == true, "User does not exist");
         all_participants[_id].history.push(history_entry(desc, all_participants[_id].balance, all_participants[_id].balance-amount, transaction_type.debit, "-1", _timestamp));
         all_participants[_id].balance -= amount;
     }
 
-    function addBalance (string calldata _id, uint256 amount, string memory desc, uint256 _timestamp) public {
+    function addBalance (string calldata _id, int256 amount, string memory desc, int256 _timestamp) public {
 
         require(checkParticipantInternal(_id) == true, "User does not exist");
         all_participants[_id].history.push(history_entry(desc, all_participants[_id].balance, all_participants[_id].balance+amount, transaction_type.credit, "-1", _timestamp));
         all_participants[_id].balance += amount;
     }
 
-    function claimCoins(string calldata _buyerId, string calldata _orderId, uint256 coinsFlipkart, uint256 coinsSeller, string calldata _sellerId, uint256 _timestamp) public {
+    function claimCoins(string calldata _buyerId, string calldata _orderId, int256 coinsFlipkart, int256 coinsSeller, string calldata _sellerId, int256 _timestamp) public {
         // Check conditions
         
         _mint(coinsFlipkart);
@@ -130,7 +130,7 @@ contract Supercoin {
 
     }
 
-    function toLoyalCustomers (string[] calldata _customer_ids, string calldata _seller_id, uint256 _number_of_coins, uint256 _timestamp) public {
+    function toLoyalCustomers (string[] calldata _customer_ids, string calldata _seller_id, int256 _number_of_coins, int256 _timestamp) public {
         // check conditions
         uint256 arrayLength = _customer_ids.length;
         for (uint i=0; i<arrayLength; i++) {
@@ -139,7 +139,7 @@ contract Supercoin {
         }
     }
 
-    function buyCoupon(string calldata _customer_id, uint256 amount, string calldata _couponId, uint256 _timestamp) public {
+    function buyCoupon(string calldata _customer_id, int256 amount, string calldata _couponId, int256 _timestamp) public {
         require(amount>0, "Coupon cost can't be less than 1 supercoin");
         subtractBalance(_customer_id, amount, string(abi.encodePacked("Coupon Paid for coupon:",' ',_couponId)), _timestamp);
     }

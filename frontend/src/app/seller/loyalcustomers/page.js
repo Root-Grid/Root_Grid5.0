@@ -3,12 +3,14 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react';
+import ToLoyalCustomer from '@/components/ContractFunctions/ToLoyalCustomers';
 
-const AddProduct = () => {
+const loyalcustomers = () => {
     const [threshold,setThreshold] = useState(0);
     const [seller,setSeller] = useState();
     const [sellerId,setSellerId] = useState();
     const [customers,setCustomers] = useState();
+    const [customerId,setCustomerId] = useState([]);
     const [isLoading,setLoading] = useState(true);
 
 
@@ -41,6 +43,11 @@ const AddProduct = () => {
             );
             // console.log(data.data);
             setCustomers(data.data);
+
+            data.data.map(element => {
+                customerId.push(element.buyerId);
+            });
+
             // console.log(customers);
             setLoading(false);
             // router.push('/seller');
@@ -103,6 +110,8 @@ const AddProduct = () => {
                         >
                             Filter Customers
                         </button>
+                        <ToLoyalCustomer users={customerId} sellerId={sellerId} coins={Number(10)} timestamp={Date.now()}/>
+                        {/* <button onClick={()=>{console.log(customerId)}} >see customerId</button> */}
                     </div>
                 </div>
             </div>
@@ -126,4 +135,4 @@ const AddProduct = () => {
     );
 };
 
-export default AddProduct;
+export default loyalcustomers;

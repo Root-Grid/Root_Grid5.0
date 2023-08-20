@@ -26,7 +26,7 @@ const orderSchema = mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ["orderPlaced", "Returned", "Indeterminent"],
+            enum: ["orderPlaced", "Returned", "Indeterminent", "Completed"],
             default: "Indeterminent", 
         },
         // ordervalue : {

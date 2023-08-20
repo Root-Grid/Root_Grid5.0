@@ -1,4 +1,7 @@
-import React from 'react';
+"use client";
+
+import Link from 'next/link';
+import React, { useState } from 'react';
 
 const transactions = [
   { status: 'credited', date: '2023-08-15', amount: -100 },
@@ -7,6 +10,8 @@ const transactions = [
 
 const TransactionHistory = () => {
   const balance = transactions.reduce((total, transaction) => total + transaction.amount, 0);
+
+  const [isLoading,setLoading] = useState(false);
 
   return (
     <div className="bg-white min-h-screen">
