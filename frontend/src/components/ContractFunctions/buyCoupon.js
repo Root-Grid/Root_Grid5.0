@@ -6,10 +6,10 @@ import { useEffect } from "react";
 import address from '../../../assets/contract_data/address.json';
 import abi from '../../../assets/contract_data/abi.json';
 import '@rainbow-me/rainbowkit/styles.css';
-import axios from 'axios';
+// import axios from 'axios';
 
 
-const buyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
+const BuyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
     useEffect(() => {
         console.log("registerData:", registerData);
         console.log("isRegisterLoading:", isRegisterLoading);
@@ -27,28 +27,30 @@ const buyCoupon = ({_customer_id, amount, _couponId, _timestamp }) => {
     } = useContractWrite({
         address: address?.address,
         abi: abi?.abi,
-        functionName: "claimCoins",
+        functionName: "buyCoupon",
     });
 
     const registerUser = async () => {
-        await registerWrite({args: [_customer_id, amount, _couponId, _timestamp ]})
+        
 
-        // const config = {
-        //     headers: {
-        //         "Content-type": "application/json",
-        //     },
-        // };
-        // await axios.post(
-        //     "http://localhost:5000/api/admin/change-order-status",
-        //     { _orderId },
-        //     config
-        // )
+        // feathData();
+
+        await registerWrite({args: [_customer_id, amount, _couponId, _timestamp ]})
     }
+
+    // const feathData = async() => {
+    //     try{
+    //         const data = await axios.post(
+    //             "http://localhost:5000/api/user/buycoupon",
+    //             {}
+    //         )
+    //     }
+    // }
 
 
   return (
-    <button onClick={registerUser}>Buy Coupon</button>
+    <button onClick={registerUser}>Buy Coupon!</button>
   )
 }
 
-export default buyCoupon;
+export default BuyCoupon;
