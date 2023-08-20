@@ -30,19 +30,26 @@ const OrderPlaced = ({_buyerId,  _orderId,  coinsFlipkart, coinsSeller,  _seller
         functionName: "claimCoins",
     });
 
-    const registerUser = async () => {
-        await registerWrite({args: [_buyerId,  _orderId,  coinsFlipkart, coinsSeller,  _sellerId, _timestamp]})
+    
 
-        // const config = {
-        //     headers: {
-        //         "Content-type": "application/json",
-        //     },
-        // };
-        // await axios.post(
-        //     "http://localhost:5000/api/admin/change-order-status",
-        //     { _orderId },
-        //     config
-        // )
+    const registerUser = async () => {
+        console.log(_buyerId,  _orderId,  coinsFlipkart, coinsSeller,  _sellerId, _timestamp);
+        await registerWrite({args: [_buyerId,  _orderId,  coinsFlipkart, coinsSeller,  _sellerId, _timestamp]})
+        changeStatus();
+        
+    }
+
+    const changeStatus = async() => {
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+            },
+        };
+        await axios.post(
+            "http://localhost:5000/api/admin/change-order-status",
+            { _orderId },
+            config
+        )
     }
 
 

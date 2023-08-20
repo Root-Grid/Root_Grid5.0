@@ -6,7 +6,6 @@ import Menu from "./Menu";
 import MenuMobile from "./MenuMobile";
 
 import { CiDeliveryTruck } from "react-icons/ci"
-import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight, BiSolidCoinStack } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
 
