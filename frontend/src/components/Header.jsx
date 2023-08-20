@@ -43,10 +43,9 @@ const Header = () => {
         functionName: "getParticipantDetails",
         args: [id]
     });
-
     useEffect(() => {
         setData({Details: userDetails})
-        console.log("Success",(data));
+        console.log("Success",(userDetails));
     }, [id])
 
     const controlNavbar = () => {
@@ -134,12 +133,12 @@ const Header = () => {
                         <div>
                             <Connectbutton />
                         </div>
-                        {address && (!address || !data) ?
+                        {address ? (!userDetails ?
                             <div>
                                 <RegisterParticipant name={info.data.name} id={info.data._id} role={role} timestamp={Date.now()} />
                             </div>
                             :
-                            <></>
+                            <></>) : null
                         }
                     </div>
                 </div>
