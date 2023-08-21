@@ -81,7 +81,9 @@ function page() {
               alt="Your Logo"
               className="h-10 w-15"
             />
+            <Link href="/">
             <div className="text-2xl font-bold">RootKart</div>
+            </Link>
           </div>
           <div className="text-2xl font-bold">{loading ? (<>Loading...</>) : (<>{seller.name}'s Deshboard</>)}</div>
           <div className="flex items-center space-x-2">
