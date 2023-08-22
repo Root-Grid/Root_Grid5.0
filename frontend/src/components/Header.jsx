@@ -42,7 +42,6 @@ const Header = () => {
         functionName: "getParticipantDetails",
         args: [id]
     });
-
     useEffect(() => {
         setData({Details: userDetails})
         console.log("Success",(userDetails));
@@ -133,12 +132,12 @@ const Header = () => {
                         <div>
                             <Connectbutton />
                         </div>
-                        {address ?
+                        {address ? (!userDetails ?
                             <div>
                                 <RegisterParticipant name={info.data.name} id={info.data._id} role={role} timestamp={Date.now()} />
                             </div>
                             :
-                            <></>
+                            <></>) : null
                         }
                     </div>
                 </div>
