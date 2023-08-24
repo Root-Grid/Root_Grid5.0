@@ -29,8 +29,8 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YourUsername/YourProject.git
-   cd YourProject
+   git clone https://github.com/Root-Grid/Root_Grid5.0.git
+   cd Root-Grid
 2. Install the required dependencies:
    ```terminal
    npm install
