@@ -5,7 +5,7 @@ const Product = require("../models/product");
 const Seller = require("../models/seller");
 
 const setOrderStatus = asyncHandler( async ( orderId ) => {
-    const delay = 5000;
+    const delay = 10000;
 
     setTimeout(async () => {
         const order = await Order.findById(orderId);
