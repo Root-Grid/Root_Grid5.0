@@ -63,7 +63,6 @@ const supercoinDashboard = () => {
                 <button className="px-4 py-2 bg-blue-500 text-white rounded">Claimed Coupons</button>
               </Link>
             </div>
-            <img src="/path/to/your/image.png" alt="Transaction Image" className="w-full mb-4 rounded-lg shadow-md" />
             <div className="space-y-4">
               {loading ? (<>loading.....</>) : (<>{
                 coupons.map((coupon, index) => (

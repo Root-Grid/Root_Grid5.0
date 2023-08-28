@@ -96,7 +96,7 @@ const loyalcustomers = () => {
                 <div className="container mx-auto bg-white border border-gray-300 shadow-lg rounded-lg p-8">
                     <h2 className="text-3xl font-semibold mb-8">Loyal Customers</h2>
                     <div className="mb-8">
-                        <label className="block text-gray-700 text-sm font-medium mb-2">Threshold Loyalty</label>
+                        <label className="block text-gray-700 text-sm font-medium mb-2">Threshold Loyalty: Total Value of Item Purchased by User</label>
                         <input
                             placeholder='Minimum Loyalty'
                             onChange={(e) => {setThreshold(e.target.value)}}
@@ -105,7 +105,7 @@ const loyalcustomers = () => {
                         />
                     </div>
                     <div className="mb-8">
-                        <label className="block text-gray-700 text-sm font-medium mb-2">Threshold Loyalty</label>
+                        <label className="block text-gray-700 text-sm font-medium mb-2">Number of Coins</label>
                         <input
                             placeholder='Number of Coins'
                             onChange={(e) => {setCoins(e.target.value)}}
